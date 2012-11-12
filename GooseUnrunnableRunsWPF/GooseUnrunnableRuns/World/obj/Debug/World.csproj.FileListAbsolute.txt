@@ -1,0 +1,7 @@
+D:\GooseUnrunnableRuns\GooseUnrunnableRuns\World\obj\Debug\ResolveAssemblyReference.cache
+D:\GooseUnrunnableRuns\GooseUnrunnableRuns\World\bin\Debug\World.dll
+D:\GooseUnrunnableRuns\GooseUnrunnableRuns\World\bin\Debug\World.pdb
+D:\GooseUnrunnableRuns\GooseUnrunnableRuns\World\obj\Debug\World.dll
+D:\GooseUnrunnableRuns\GooseUnrunnableRuns\World\obj\Debug\World.pdb
+D:\GooseUnrunnableRuns\GooseUnrunnableRuns\World\bin\Debug\Common.dll
+D:\GooseUnrunnableRuns\GooseUnrunnableRuns\World\bin\Debug\Common.pdb

@@ -1,0 +1,13 @@
+﻿<Window x:Class="GooseUnrunnableRuns.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow"
+        Name="mainWindow"
+        Background="Black"
+        ResizeMode="NoResize"
+        PreviewKeyDown="MainWindowKeyDown">
+    <Canvas Name="mainCanvas">
+        <!--<Image Source="Images/Background.png" />-->
+        <Image Source="Images/DeathStar_small.png" Margin="50, 50, 0, 0"/>
+    </Canvas>
+</Window>

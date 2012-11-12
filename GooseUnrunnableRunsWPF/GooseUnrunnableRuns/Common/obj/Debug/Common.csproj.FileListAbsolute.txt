@@ -1,0 +1,5 @@
+D:\GooseUnrunnableRuns\GooseUnrunnableRuns\Common\bin\Debug\Common.dll
+D:\GooseUnrunnableRuns\GooseUnrunnableRuns\Common\bin\Debug\Common.pdb
+D:\GooseUnrunnableRuns\GooseUnrunnableRuns\Common\obj\Debug\ResolveAssemblyReference.cache
+D:\GooseUnrunnableRuns\GooseUnrunnableRuns\Common\obj\Debug\Common.dll
+D:\GooseUnrunnableRuns\GooseUnrunnableRuns\Common\obj\Debug\Common.pdb
