@@ -1,0 +1,10 @@
+﻿{
+	name:sky;
+	color:wheat;
+	bounds: 0,0,800,3000;
+}
+{
+	name:mario;
+	image:mario.png;
+	bounds: 100,100,100,100;
+}
