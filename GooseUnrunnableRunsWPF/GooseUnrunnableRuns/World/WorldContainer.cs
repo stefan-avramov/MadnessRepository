@@ -32,9 +32,10 @@ namespace World
 			{
 				new GroundObject(0, 100, 600),
 				new GroundObject(800, 200, 500),
-				new GroundObject(1600, 150, 200),
-				new GroundObject(2150, 50, 50),
-				new GroundObject(2450, 100, 300)
+				new GroundObject(1600, 450, 50),
+				new GroundObject(2000, 150, 200),
+				new GroundObject(2550, 50, 50),
+				new GroundObject(2950, 100, 300)
 			};
 
 			goose = new GooseObject();

@@ -8,6 +8,6 @@
         PreviewKeyDown="MainWindowKeyDown">
     <Canvas Name="mainCanvas">
         <!--<Image Source="Images/Background.png" />-->
-        <Image Source="Images/DeathStar_small.png" Margin="50, 50, 0, 0"/>
+		<Image Source="pack://application:,,,/Common;component/Images/DeathStar_small.png" Margin="50, 50, 0, 0"/>
     </Canvas>
 </Window>

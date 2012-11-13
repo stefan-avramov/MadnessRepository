@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using Common;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace World
 {
@@ -17,6 +18,11 @@ namespace World
 		private bool isJumping = false;
 		private int accelaration = 0;
 		private bool isDead = false;
+		
+		private ImageSource imageSource;
+		private int imageIndex = 0;
+		private bool isMoving = false;
+		private bool isFacingLeft = false;
 
 		private GroundObject groundObjectUnder = null;
 
@@ -34,9 +40,13 @@ namespace World
 			this.Width = GameEnvironment.GooseWidth;
 
 			this.isDead = false;
+			this.isFacingLeft = false;
 
 			Move(WorldContainer.GroundObjects[0].OffsetX, 0);
 			groundObjectUnder = GetGroundObjectUnder();
+
+			imageIndex = 0;
+			RefreshRunImage();
 		}
 
 		private void Jump()
@@ -69,19 +79,27 @@ namespace World
 				{
 					MoveRight();
 				}
-
-				if (Keyboard.IsKeyDown(Key.Space))
+				else
 				{
-					Jump();
-				}
-				if (groundObjectUnder == null)
-				{
-					Fall();
+					isMoving = false;
 				}
 
 				if (isJumping)
 				{
 					ProceedJumping();
+				}
+				else if (Keyboard.IsKeyDown(Key.Space))
+				{
+					Jump();
+				}
+				else if (groundObjectUnder == null)
+				{
+					Fall();
+				}
+				else if (!isMoving)
+				{
+					imageIndex = 0;
+					RefreshRunImage();
 				}
 			}
 			else
@@ -130,6 +148,7 @@ namespace World
 
 		private void MoveLeft()
 		{
+			isFacingLeft = true;
 			if (GameEnvironment.GooseSpeed <= Point.X)
 			{
 				Move(-GameEnvironment.GooseSpeed, 0);
@@ -138,11 +157,38 @@ namespace World
 			{
 				Move(-(int)Point.X, 0);
 			}
+			if (!isMoving)
+			{
+				imageIndex = 2;
+			}
+			isMoving = true;
+			imageIndex = (imageIndex + 1) % 6;
+			RefreshRunImage();
 		}
 
 		private void MoveRight()
 		{
+			isFacingLeft = false;
 			Move(GameEnvironment.GooseSpeed, 0);
+			if (!isMoving)
+			{
+				imageIndex = 2;
+			}
+			isMoving = true;
+			imageIndex = (imageIndex + 1)%6;
+			RefreshRunImage();
+		}
+
+		private void RefreshRunImage()
+		{
+			if (isFacingLeft)
+			{
+				ImageSource = ImagesContainer.GooseRunLeftImages[imageIndex / 3];
+			}
+			else
+			{
+				ImageSource = ImagesContainer.GooseRunRightImages[imageIndex / 3];
+			}
 		}
 
 		private void Move(int offsetX, int offsetY)
@@ -197,6 +243,22 @@ namespace World
 				{
 					point = value;
 					OnPropertyChanged("Point");
+				}
+			}
+		}
+
+		public ImageSource ImageSource
+		{
+			get
+			{
+				return imageSource;
+			}
+			set
+			{
+				if (imageSource != value)
+				{
+					imageSource = value;
+					OnPropertyChanged("ImageSource");
 				}
 			}
 		}
