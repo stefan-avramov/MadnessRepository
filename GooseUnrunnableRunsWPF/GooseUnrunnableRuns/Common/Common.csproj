@@ -49,9 +49,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Background.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\DeathStar_small.png" />
   </ItemGroup>
   <ItemGroup>
