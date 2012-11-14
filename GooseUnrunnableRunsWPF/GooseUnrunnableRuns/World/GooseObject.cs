@@ -20,7 +20,7 @@ namespace World
 		private bool isDead = false;
 		
 		private ImageSource imageSource;
-		private int imageIndex = 0;
+		private int imageIndex = -1;
 		private bool isMoving = false;
 		private bool isFacingLeft = false;
 
@@ -45,8 +45,7 @@ namespace World
 			Move(WorldContainer.GroundObjects[0].OffsetX, 0);
 			groundObjectUnder = GetGroundObjectUnder();
 
-			imageIndex = 0;
-			RefreshRunImage();
+			ImageIndex = 0;
 		}
 
 		private void Jump()
@@ -79,27 +78,22 @@ namespace World
 				{
 					MoveRight();
 				}
-				else
+				else if (!isJumping)
 				{
-					isMoving = false;
+					ImageIndex = 0;
 				}
 
 				if (isJumping)
 				{
 					ProceedJumping();
 				}
-				else if (Keyboard.IsKeyDown(Key.Space))
+				else if (Keyboard.IsKeyDown(Key.Space) || Keyboard.IsKeyDown(Key.Up))
 				{
 					Jump();
 				}
 				else if (groundObjectUnder == null)
 				{
 					Fall();
-				}
-				else if (!isMoving)
-				{
-					imageIndex = 0;
-					RefreshRunImage();
 				}
 			}
 			else
@@ -148,35 +142,27 @@ namespace World
 
 		private void MoveLeft()
 		{
-			isFacingLeft = true;
-			if (GameEnvironment.GooseSpeed <= Point.X)
-			{
-				Move(-GameEnvironment.GooseSpeed, 0);
-			}
-			else
-			{
-				Move(-(int)Point.X, 0);
-			}
-			if (!isMoving)
-			{
-				imageIndex = 2;
-			}
-			isMoving = true;
-			imageIndex = (imageIndex + 1) % 6;
-			RefreshRunImage();
+			MoveHorizontally(-GameEnvironment.GooseSpeed);
 		}
 
 		private void MoveRight()
 		{
-			isFacingLeft = false;
-			Move(GameEnvironment.GooseSpeed, 0);
+			MoveHorizontally(GameEnvironment.GooseSpeed);
+		}
+
+		private void MoveHorizontally(int offset)
+		{
+			Move(offset, 0);
+
+			isFacingLeft = offset < 0;
+
 			if (!isMoving)
 			{
 				imageIndex = 2;
 			}
+
 			isMoving = true;
-			imageIndex = (imageIndex + 1)%6;
-			RefreshRunImage();
+			ImageIndex = (imageIndex + 1)%6;
 		}
 
 		private void RefreshRunImage()
@@ -197,6 +183,22 @@ namespace World
 			point.Offset(0, offsetY);
 			groundObjectUnder = GetGroundObjectUnder();
 			OnPropertyChanged("Point");
+		}
+
+		private int ImageIndex
+		{
+			get
+			{
+				return imageIndex;
+			}
+			set
+			{
+				if (imageIndex != value)
+				{
+					imageIndex = value;
+					RefreshRunImage();
+				}
+			}
 		}
 
 		public int Height

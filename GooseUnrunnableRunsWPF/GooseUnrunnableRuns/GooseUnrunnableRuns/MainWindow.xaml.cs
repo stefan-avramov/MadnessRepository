@@ -62,8 +62,7 @@ namespace GooseUnrunnableRuns
 
 			var image = new Image();
 			image.Height = GameEnvironment.GooseHeight;
-			image.Width = GameEnvironment.GooseWidth * 2;
-			image.Margin = new Thickness(-18, 0, 0, 0);
+			image.Margin = new Thickness(-22, 0, 0, 0);
 
 			Binding imageBinding = new Binding();
 			imageBinding.Source = goose;
