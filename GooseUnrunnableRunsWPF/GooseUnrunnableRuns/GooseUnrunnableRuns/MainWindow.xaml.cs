@@ -64,12 +64,7 @@ namespace GooseUnrunnableRuns
 			image.Height = GameEnvironment.GooseHeight;
 			image.Margin = new Thickness(-22, 0, 0, 0);
 
-			Binding imageBinding = new Binding();
-			imageBinding.Source = goose;
-			imageBinding.Mode = BindingMode.TwoWay;
-			imageBinding.Path = new PropertyPath("ImageSource");
-
-			BindingOperations.SetBinding(image, Image.SourceProperty, imageBinding);
+			BindingHelper.Bind(image, Image.SourceProperty, goose, "ImageSource");
 
 			Canvas rect = new Canvas();
 			rect.Height = GameEnvironment.GooseHeight;
@@ -77,13 +72,7 @@ namespace GooseUnrunnableRuns
 			rect.ClipToBounds = false;
 			rect.Children.Add(image);
 
-			Binding binding = new Binding();
-			binding.Source = goose;
-			binding.Mode = BindingMode.TwoWay;
-			binding.Path = new PropertyPath("Point");
-			binding.Converter = new PointToMarginConverter();
-
-			BindingOperations.SetBinding(rect, Rectangle.MarginProperty, binding);
+			BindingHelper.Bind(rect, Canvas.MarginProperty, goose, "Point", new PointToMarginConverter());
 
 			mainCanvas.Children.Add(rect);
 		}
@@ -97,14 +86,8 @@ namespace GooseUnrunnableRuns
 				rect.Width = groundObject.Width;
 				rect.Height = groundObject.Height;
 
-				Binding binding = new Binding();
-				binding.Source = groundObject;
-				binding.Mode = BindingMode.TwoWay;
-				binding.Path = new PropertyPath("OffsetX");
-				binding.Converter = new OffsetToMarginConverter();
-				binding.ConverterParameter = groundObject.OffsetY;
+				BindingHelper.Bind(rect, Rectangle.MarginProperty, groundObject, "OffsetX", new OffsetToMarginConverter(), groundObject.OffsetY);
 
-				BindingOperations.SetBinding(rect, Rectangle.MarginProperty, binding);
 				mainCanvas.Children.Add(rect);
 			}
 		}

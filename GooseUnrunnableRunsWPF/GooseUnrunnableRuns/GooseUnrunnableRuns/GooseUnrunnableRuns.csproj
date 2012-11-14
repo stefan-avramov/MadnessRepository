@@ -63,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BindingHelper.cs" />
     <Compile Include="Converters\PointToMarginConverter.cs" />
     <Compile Include="Converters\OffsetToMarginConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">

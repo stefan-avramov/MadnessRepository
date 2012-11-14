@@ -12,8 +12,8 @@ namespace World
 	public class GooseObject : ViewModel
 	{
 		Point point;
-		int height;
-		int width;
+		readonly int height;
+		readonly int width;
 
 		private bool isJumping = false;
 		private int accelaration = 0;
@@ -28,6 +28,8 @@ namespace World
 
 		public GooseObject()
 		{
+			this.height = GameEnvironment.GooseHeight;
+			this.width = GameEnvironment.GooseWidth;
 			Respawn();
 		}
 
@@ -36,8 +38,6 @@ namespace World
 			this.Point = 
 				new Point(GameEnvironment.WindowWidth / 2,
 							GameEnvironment.WindowHeight - WorldContainer.GroundObjects[0].Height - GameEnvironment.GooseHeight);
-			this.Height = GameEnvironment.GooseHeight; 
-			this.Width = GameEnvironment.GooseWidth;
 
 			this.isDead = false;
 			this.isFacingLeft = false;
@@ -207,14 +207,6 @@ namespace World
 			{
 				return height;
 			}
-			set 
-			{
-				if (height != value)
-				{
-					height = value;
-					OnPropertyChanged("Height");
-				}
-			}
 		}
 
 		public int Width
@@ -222,14 +214,6 @@ namespace World
 			get 
 			{
 				return width;
-			}
-			set
-			{
-				if (width != value)
-				{
-					width = value;
-					OnPropertyChanged("Width");
-				}
 			}
 		}
 
