@@ -11,31 +11,67 @@ namespace XnaGooseSpike
     {
         bool isForward = true;
         bool isMoving = false;
+
         public Texture2D ForwardTexture { get; set; }
         public Texture2D BackwardTexture { get; set; }
+        public Texture2D MapTexture { get; set; }
+        public Rectangle BoundingBox { get; set; }
         public int FramesCount { get; set; }
         public int FramesPerSec { get; set; }
+
         int frame = 0;
         double totalTime = 0;
+        private bool isJumping;
+        private float jumpAcceleration = 1f;
+         
+        public override Vector2 Location
+        {
+            get
+            {
+                return base.Location;
+            }
+            set
+            {
+                if (IsValidLocation(value))
+                {
+                    base.Location = value; 
+                }
+            }
+        }
+
+        private bool IsValidLocation(Vector2 value)
+        {
+            if (value.X < 0 || value.Y < 0) return false;
+            try
+            {
+                Color[] myColors = new Color[this.BoundingBox.Width * this.BoundingBox.Height];
+                MapTexture.GetData<Color>(0, new Rectangle((int)value.X + this.BoundingBox.X, (int)value.Y + this.BoundingBox.Y, this.BoundingBox.Width, this.BoundingBox.Height), myColors, 0, this.BoundingBox.Width * this.BoundingBox.Height);
+                return !myColors.Contains(Color.Black);
+            }
+            catch
+            {
+                
+            }
+
+            return false;
+        }
 
         public override void Update(Microsoft.Xna.Framework.GameTime time)
         {
             base.Update(time);
 
-            
             if (this.isMoving)
             {
                 if (this.isForward)
                 {
-                    this.Location = new Vector2(this.Location.X + (float)time.ElapsedGameTime.TotalSeconds * 150f, this.Location.Y);
+                    this.Location = new Vector2(this.Location.X + (float)time.ElapsedGameTime.TotalSeconds * 250f, this.Location.Y);
                 }
                 else
                 {
-                    this.Location = new Vector2(this.Location.X - (float)time.ElapsedGameTime.TotalSeconds * 150f, this.Location.Y);
+                    this.Location = new Vector2(this.Location.X - (float)time.ElapsedGameTime.TotalSeconds * 250f, this.Location.Y);
                 }
 
                 totalTime += time.ElapsedGameTime.TotalSeconds;
-
 
                 if (totalTime > 1.0f / FramesPerSec)
                 {
@@ -43,30 +79,55 @@ namespace XnaGooseSpike
                     frame++;
                     frame %= FramesCount;
                 }
-            } 
+            }
+
+            this.Location = new Vector2(this.Location.X, this.Location.Y + (float)time.ElapsedGameTime.TotalSeconds * 600f * jumpAcceleration);
+
+            if (this.isJumping)
+            {
+                this.jumpAcceleration = Math.Min(1.0f, this.jumpAcceleration + 0.02f);
+                if (this.IsOnGround())
+                {
+                    this.isJumping = false;
+                }
+            }
         }
 
         public void MoveForward()
         {
-            if (this.isMoving) return;
-
             this.isMoving = true;
             this.isForward = true;
+            if (this.isMoving) return;
             this.totalTime = 0;
         }
 
         public void MoveBackward()
         {
-            if (this.isMoving) return;
-
             this.isMoving = true;
             this.isForward = false;
+            if (this.isMoving) return;
             this.totalTime = 0;
         }
 
         public void Stop()
         {
             this.isMoving = false;
+        }
+
+        public void Jump()
+        {
+            if (!this.IsOnGround() || this.isJumping)
+            {
+                return;
+            }
+
+            this.isJumping = true;
+            this.jumpAcceleration = -1f;
+        }
+
+        private bool IsOnGround()
+        {
+            return this.jumpAcceleration > 0 && !this.IsValidLocation(new Vector2(this.Location.X, this.Location.Y + 10f));
         }
 
         public override void DrawFrame(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Microsoft.Xna.Framework.Vector2 screenPos)

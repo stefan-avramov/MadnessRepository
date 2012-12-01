@@ -9,7 +9,19 @@ namespace XnaGooseSpike
 {
     abstract class SceneElement
     {
-        public Vector2 Location { get; set; }
+        private Vector2 location;
+
+        public virtual Vector2 Location
+        {
+            get
+            {
+                return location;
+            }
+            set
+            {
+                location = value;  
+            }
+        }
 
         public virtual void Update(GameTime time)
         {

@@ -61,9 +61,11 @@ namespace XnaGooseSpike
             player = new PlayerElement();
             player.ForwardTexture = Content.Load<Texture2D>("tough");
             player.BackwardTexture = Content.Load<Texture2D>("rtough");
+            player.MapTexture = Content.Load<Texture2D>("map");
             player.FramesCount = 4;
             player.FramesPerSec = 8;
-            player.Location = new Vector2(0, 470);
+            player.BoundingBox = new Rectangle(14, 22, 78, 113);
+            //player.Location = new Vector2(0, 470);
             this.scene.Elements.Add(player);
         }
 
@@ -108,6 +110,11 @@ namespace XnaGooseSpike
             else
             {
                 player.Stop();
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                player.Jump();
             }
 
             // TODO: Add your update logic here
