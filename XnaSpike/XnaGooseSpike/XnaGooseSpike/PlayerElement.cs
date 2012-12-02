@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
@@ -9,23 +10,34 @@ namespace XnaGooseSpike
 {
     class PlayerElement : SceneElement
     {
+		private int framesCount;
+		private int framesPerSec;
+
+		private const int PLAYER_HEIGHT = 42;
+		private const int PLAYER_WIDTH = 57;
+
         bool isForward = true;
         bool isMoving = false;
 
-        public Texture2D ForwardTexture { get; set; }
-        public Texture2D BackwardTexture { get; set; }
+        public Texture2D Texture { get; set; }
         public Texture2D MapTexture { get; set; }
-        public Rectangle BoundingBox { get; set; }
-        public int FramesCount { get; set; }
-        public int FramesPerSec { get; set; }
 
         int frame = 0;
         double totalTime = 0;
         private bool isJumping;
         private float jumpAcceleration = 1f;
-         
-        public override Vector2 Location
-        {
+
+		public void LoadContent(ContentManager content)
+		{
+			this.framesCount = 2;
+			this.framesPerSec = 12;
+
+			this.Texture = content.Load<Texture2D>("goose");
+			this.MapTexture = content.Load<Texture2D>("map");
+		}
+
+		public override Vector2 Location
+		{
             get
             {
                 return base.Location;
@@ -39,22 +51,22 @@ namespace XnaGooseSpike
             }
         }
 
-        private bool IsValidLocation(Vector2 value)
-        {
-            if (value.X < 0 || value.Y < 0) return false;
-            try
-            {
-                Color[] myColors = new Color[this.BoundingBox.Width * this.BoundingBox.Height];
-                MapTexture.GetData<Color>(0, new Rectangle((int)value.X + this.BoundingBox.X, (int)value.Y + this.BoundingBox.Y, this.BoundingBox.Width, this.BoundingBox.Height), myColors, 0, this.BoundingBox.Width * this.BoundingBox.Height);
-                return !myColors.Contains(Color.Black);
-            }
-            catch
-            {
-                
-            }
+		private bool IsValidLocation(Vector2 value)
+		{
+			if (value.X < 0 || value.Y < 0) return false;
+			try
+			{
+				Color[] myColors = new Color[PLAYER_WIDTH * PLAYER_HEIGHT];
+				MapTexture.GetData<Color>(0, new Rectangle((int)value.X, (int)value.Y, PLAYER_WIDTH, PLAYER_HEIGHT),
+					myColors, 0, PLAYER_WIDTH * PLAYER_HEIGHT);
+				return !myColors.Contains(Color.Black);
+			}
+			catch
+			{
+			}
 
-            return false;
-        }
+			return false;
+		}
 
         public override void Update(Microsoft.Xna.Framework.GameTime time)
         {
@@ -73,11 +85,11 @@ namespace XnaGooseSpike
 
                 totalTime += time.ElapsedGameTime.TotalSeconds;
 
-                if (totalTime > 1.0f / FramesPerSec)
+                if (totalTime > 1.0f / this.framesPerSec)
                 {
                     totalTime = 0;
                     frame++;
-                    frame %= FramesCount;
+                    frame %= this.framesCount;
                 }
             }
 
@@ -127,18 +139,14 @@ namespace XnaGooseSpike
 
         private bool IsOnGround()
         {
-            return this.jumpAcceleration > 0 && !this.IsValidLocation(new Vector2(this.Location.X, this.Location.Y + 10f));
+            return !this.IsValidLocation(new Vector2(this.Location.X, this.Location.Y + 10));
         }
 
-        public override void DrawFrame(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Microsoft.Xna.Framework.Vector2 screenPos)
-        {
-            int fameWidth = 155;
-            Texture2D myTexture = isForward ? this.ForwardTexture : this.BackwardTexture;
-
-            Rectangle sourcerect = new Rectangle(fameWidth * (this.isMoving ? frame : (this.isForward ? 0 : 3)), 0, fameWidth, myTexture.Height);
-
-            batch.Draw(myTexture, screenPos, sourcerect, Color.White,
-               0f, new Vector2(), 1f, SpriteEffects.None, 0.5f);
-        }
+		public override void DrawFrame(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Microsoft.Xna.Framework.Vector2 screenPos)
+		{
+			Rectangle sourcerect = new Rectangle(frame * PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
+			batch.Draw(this.Texture, screenPos, sourcerect, Color.White, 0f, new Vector2(), 1f, 
+				isForward ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.5f);
+		}
     }
 }

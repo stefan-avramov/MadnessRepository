@@ -25,7 +25,7 @@ namespace XnaGooseSpike
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferHeight = 680;
+            graphics.PreferredBackBufferHeight = 672;
             graphics.PreferredBackBufferWidth = 890; 
         }
 
@@ -40,8 +40,6 @@ namespace XnaGooseSpike
             // TODO: Add your initialization logic here
 
             base.Initialize();
-           
-            
         }
 
         /// <summary>
@@ -59,13 +57,7 @@ namespace XnaGooseSpike
             this.scene = new GameScene(GraphicsDevice, background);
 
             player = new PlayerElement();
-            player.ForwardTexture = Content.Load<Texture2D>("tough");
-            player.BackwardTexture = Content.Load<Texture2D>("rtough");
-            player.MapTexture = Content.Load<Texture2D>("map");
-            player.FramesCount = 4;
-            player.FramesPerSec = 8;
-            player.BoundingBox = new Rectangle(14, 22, 78, 113);
-            //player.Location = new Vector2(0, 470);
+			player.LoadContent(Content);
             this.scene.Elements.Add(player);
         }
 
@@ -85,9 +77,11 @@ namespace XnaGooseSpike
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
+				Keyboard.GetState().IsKeyDown(Keys.Escape))
+			{
+				this.Exit();
+			}
 
             if(Keyboard.GetState().IsKeyDown(Keys.Left))
             {
