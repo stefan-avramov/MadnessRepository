@@ -56,9 +56,7 @@ namespace XnaGooseSpike
 			if (value.X < 0 || value.Y < 0) return false;
 			try
 			{
-				Color[] myColors = new Color[PLAYER_WIDTH * PLAYER_HEIGHT];
-				MapTexture.GetData<Color>(0, new Rectangle((int)value.X, (int)value.Y, PLAYER_WIDTH, PLAYER_HEIGHT),
-					myColors, 0, PLAYER_WIDTH * PLAYER_HEIGHT);
+				Color[] myColors = GetMapIntersectionRectangle(value);
 				return !myColors.Contains(Color.Black);
 			}
 			catch
@@ -68,44 +66,94 @@ namespace XnaGooseSpike
 			return false;
 		}
 
-        public override void Update(Microsoft.Xna.Framework.GameTime time)
-        {
-            base.Update(time);
+		private Color[] GetMapIntersectionRectangle(Vector2 location)
+		{
+			var result = new Color[PLAYER_WIDTH * PLAYER_HEIGHT];
+			MapTexture.GetData<Color>(0, new Rectangle((int)location.X, (int)location.Y, PLAYER_WIDTH, PLAYER_HEIGHT),
+				result, 0, PLAYER_WIDTH * PLAYER_HEIGHT);
+			return result;
+		}
 
-            if (this.isMoving)
-            {
-                if (this.isForward)
-                {
-                    this.Location = new Vector2(this.Location.X + (float)time.ElapsedGameTime.TotalSeconds * 250f, this.Location.Y);
-                }
-                else
-                {
-                    this.Location = new Vector2(this.Location.X - (float)time.ElapsedGameTime.TotalSeconds * 250f, this.Location.Y);
-                }
+		public override void Update(Microsoft.Xna.Framework.GameTime time)
+		{
+			base.Update(time);
 
-                totalTime += time.ElapsedGameTime.TotalSeconds;
+			if (this.isMoving)
+			{
+				if (this.isForward)
+				{
+					this.Location = new Vector2(this.Location.X + (float)time.ElapsedGameTime.TotalSeconds * 250f, this.Location.Y);
+				}
+				else
+				{
+					this.Location = new Vector2(this.Location.X - (float)time.ElapsedGameTime.TotalSeconds * 250f, this.Location.Y);
+				}
 
-                if (totalTime > 1.0f / this.framesPerSec)
-                {
-                    totalTime = 0;
-                    frame++;
-                    frame %= this.framesCount;
-                }
-            }
+				totalTime += time.ElapsedGameTime.TotalSeconds;
 
-            this.Location = new Vector2(this.Location.X, this.Location.Y + (float)time.ElapsedGameTime.TotalSeconds * 600f * jumpAcceleration);
+				if (totalTime > 1.0f / this.framesPerSec)
+				{
+					totalTime = 0;
+					frame++;
+					frame %= this.framesCount;
+				}
+			}
 
-            if (this.isJumping)
-            {
-                this.jumpAcceleration = Math.Min(1.0f, this.jumpAcceleration + 0.02f);
-                if (this.IsOnGround())
-                {
-                    this.isJumping = false;
-                }
-            }
-        }
+			// epeck block
+			{
+				Vector2 newLocation = new Vector2(this.Location.X, this.Location.Y + (float)time.ElapsedGameTime.TotalSeconds * 600f * jumpAcceleration);
+				int intersectLevel = GroundLevelIntersection(newLocation);
+				if (intersectLevel > 0)
+				{
+					newLocation = new Vector2(newLocation.X, newLocation.Y - intersectLevel);
+				}
+				this.Location = newLocation;
+			}
 
-        public void MoveForward()
+			if (this.isJumping)
+			{
+				this.jumpAcceleration = Math.Min(1.0f, this.jumpAcceleration + 0.02f);
+				int intersectLevel = GroundLevelIntersection(Location);
+				if (intersectLevel > 0)
+				{
+					this.isJumping = false;
+					this.Location = new Vector2(Location.X - intersectLevel, Location.Y);
+				}
+			}
+		}
+
+		private int GroundLevelIntersection(Vector2 location)
+		{
+			Color[,] rect = ConvertArrayToRectangle(GetMapIntersectionRectangle(location));
+			for (int i = PLAYER_HEIGHT - 1; i >= 0; i--)
+			{
+				bool hasBlack = false;
+				for (int j = 0; j < PLAYER_WIDTH; j++)
+				{
+					if (rect[i, j] == Color.Black)
+					{
+						hasBlack = true;
+					}
+				}
+				if (!hasBlack)
+				{
+					return PLAYER_HEIGHT - 1 - i;
+				}
+			}
+			return PLAYER_HEIGHT;
+		}
+
+		Color[,] ConvertArrayToRectangle(Color[] color)
+		{
+			var answer = new Color[PLAYER_HEIGHT, PLAYER_WIDTH];
+			for (int i = 0; i < color.Length; i++)
+			{
+				answer[i / PLAYER_WIDTH, i % PLAYER_WIDTH] = color[i];
+			}
+			return answer;
+		}
+
+		public void MoveForward()
         {
             this.isMoving = true;
             this.isForward = true;
@@ -139,7 +187,7 @@ namespace XnaGooseSpike
 
         private bool IsOnGround()
         {
-            return !this.IsValidLocation(new Vector2(this.Location.X, this.Location.Y + 10));
+            return !this.IsValidLocation(new Vector2(this.Location.X, this.Location.Y + 1));
         }
 
 		public override void DrawFrame(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Microsoft.Xna.Framework.Vector2 screenPos)
