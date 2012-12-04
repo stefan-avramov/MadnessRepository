@@ -25,7 +25,9 @@ namespace XnaGooseSpike
         int frame = 0;
         double totalTime = 0;
         private bool isJumping;
-        private float jumpAcceleration = 1f;
+		private const float jumpPower = 1.8f;
+		private float jumpSpeed = jumpPower;
+		private float jumpAccelaration = 0.07f;
 
 		public void LoadContent(ContentManager content)
 		{
@@ -98,21 +100,22 @@ namespace XnaGooseSpike
 					frame %= this.framesCount;
 				}
 			}
-
+			
 			// epeck block
 			{
-				Vector2 newLocation = new Vector2(this.Location.X, this.Location.Y + (float)time.ElapsedGameTime.TotalSeconds * 600f * jumpAcceleration);
+				Vector2 newLocation = new Vector2(this.Location.X, this.Location.Y + (float)time.ElapsedGameTime.TotalSeconds * 600f * jumpSpeed);
 				int intersectLevel = GroundLevelIntersection(newLocation);
 				if (intersectLevel > 0)
 				{
 					newLocation = new Vector2(newLocation.X, newLocation.Y - intersectLevel);
+					this.isJumping = false;
 				}
 				this.Location = newLocation;
 			}
 
 			if (this.isJumping)
 			{
-				this.jumpAcceleration = Math.Min(1.0f, this.jumpAcceleration + 0.02f);
+				this.jumpSpeed += jumpAccelaration;
 				int intersectLevel = GroundLevelIntersection(Location);
 				if (intersectLevel > 0)
 				{
@@ -124,23 +127,29 @@ namespace XnaGooseSpike
 
 		private int GroundLevelIntersection(Vector2 location)
 		{
-			Color[,] rect = ConvertArrayToRectangle(GetMapIntersectionRectangle(location));
-			for (int i = PLAYER_HEIGHT - 1; i >= 0; i--)
+			try
 			{
-				bool hasBlack = false;
-				for (int j = 0; j < PLAYER_WIDTH; j++)
+				Color[,] rect = ConvertArrayToRectangle(GetMapIntersectionRectangle(location));
+				for (int i = PLAYER_HEIGHT - 1; i >= 0; i--)
 				{
-					if (rect[i, j] == Color.Black)
+					bool hasBlack = false;
+					for (int j = 0; j < PLAYER_WIDTH; j++)
 					{
-						hasBlack = true;
+						if (rect[i, j] == Color.Black)
+						{
+							hasBlack = true;
+						}
+					}
+					if (!hasBlack)
+					{
+						return PLAYER_HEIGHT - 1 - i;
 					}
 				}
-				if (!hasBlack)
-				{
-					return PLAYER_HEIGHT - 1 - i;
-				}
+				return PLAYER_HEIGHT;
 			}
-			return PLAYER_HEIGHT;
+			catch { }
+
+			return 0;
 		}
 
 		Color[,] ConvertArrayToRectangle(Color[] color)
@@ -182,7 +191,7 @@ namespace XnaGooseSpike
             }
 
             this.isJumping = true;
-            this.jumpAcceleration = -1f;
+            this.jumpSpeed = -jumpPower;
         }
 
         private bool IsOnGround()
