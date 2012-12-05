@@ -72,6 +72,7 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FpsLogger.cs" />
     <Compile Include="GameScene.cs" />
     <Compile Include="PlayerElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

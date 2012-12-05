@@ -19,6 +19,7 @@ namespace XnaGooseSpike
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         GameScene scene;
+		FpsLogger fpsLogger;
         PlayerElement player;
 
         public Game1()
@@ -51,10 +52,10 @@ namespace XnaGooseSpike
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
-
             Texture2D background = Content.Load<Texture2D>("level1");
-            this.scene = new GameScene(GraphicsDevice, background);
+            
+			this.scene = new GameScene(GraphicsDevice, background);
+			this.fpsLogger = new FpsLogger(this.Content);
 
             player = new PlayerElement();
 			player.LoadContent(Content);
@@ -111,7 +112,6 @@ namespace XnaGooseSpike
                 player.Jump();
             }
 
-            // TODO: Add your update logic here
             this.scene.Update(gameTime);
 
             base.Update(gameTime);
@@ -123,12 +123,11 @@ namespace XnaGooseSpike
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
+            GraphicsDevice.Clear(Color.Gray);
 
             spriteBatch.Begin();
             this.scene.Draw(spriteBatch);
+            this.fpsLogger.Draw(gameTime, spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
