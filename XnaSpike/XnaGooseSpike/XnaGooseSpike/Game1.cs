@@ -20,8 +20,7 @@ namespace XnaGooseSpike
         SpriteBatch spriteBatch;
         GameScene scene;
 		FpsLogger fpsLogger;
-        PlayerElement player;
-
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -53,13 +52,11 @@ namespace XnaGooseSpike
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             Texture2D background = Content.Load<Texture2D>("level1");
-            
-			this.scene = new GameScene(GraphicsDevice, background);
-			this.fpsLogger = new FpsLogger(this.Content);
 
-            player = new PlayerElement();
-			player.LoadContent(Content);
-            this.scene.Elements.Add(player);
+            this.scene = new GenerationGameScene(GraphicsDevice, background, 100);
+            //this.scene = new SinglePlayerGameScene(GraphicsDevice, background);
+            this.scene.LoadContent(Content);
+			this.fpsLogger = new FpsLogger(this.Content); 
         }
 
         /// <summary>
@@ -83,34 +80,6 @@ namespace XnaGooseSpike
 			{
 				this.Exit();
 			}
-
-            if(Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                this.scene.Offset = new Vector2(this.scene.Offset.X + 5, 0);
-            }
-
-            if(Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                this.scene.Offset = new Vector2(this.scene.Offset.X - 5, 0);
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                player.MoveBackward();
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                player.MoveForward();
-            }
-            else
-            {
-                player.Stop();
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                player.Jump();
-            }
 
             this.scene.Update(gameTime);
 

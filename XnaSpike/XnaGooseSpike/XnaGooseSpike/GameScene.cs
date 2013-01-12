@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace XnaGooseSpike
 {
@@ -29,7 +30,7 @@ namespace XnaGooseSpike
 
         public Vector2 Offset { get; set; }
 
-        public void Update(GameTime gameTime) 
+        public virtual void Update(GameTime gameTime) 
         {
             foreach (SceneElement element in this.Elements)
             {
@@ -43,7 +44,7 @@ namespace XnaGooseSpike
             this.DrawElements(batch);
         }
 
-        private void DrawElements(SpriteBatch batch)
+        protected virtual void DrawElements(SpriteBatch batch)
         {
             foreach (SceneElement element in this.Elements)
             {
@@ -51,10 +52,15 @@ namespace XnaGooseSpike
             }
         }
 
-        private void OwnDraw(SpriteBatch batch)
+        protected virtual void OwnDraw(SpriteBatch batch)
         {
             batch.Draw(backgroundTexture, Offset, null,
                     Color.White, 0, new Vector2(0,0), 1, SpriteEffects.None, 0f);
+        }
+
+        public virtual void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
+        {
+            
         }
     }
 }
