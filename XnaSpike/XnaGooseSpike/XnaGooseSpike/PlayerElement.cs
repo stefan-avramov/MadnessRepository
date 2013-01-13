@@ -126,8 +126,8 @@ namespace XnaGooseSpike
             var result = resultBag;
             lock (syncObj)
             {
-                MapTexture.GetData<Color>(0, new Rectangle((int)location.X, (int)location.Y, PLAYER_WIDTH, PLAYER_HEIGHT),
-                    result, 0, PLAYER_WIDTH * PLAYER_HEIGHT);
+                Rectangle playerBounds = new Rectangle(Math.Min(Math.Max(0, (int)location.X), MapTexture.Width - PLAYER_WIDTH), Math.Min(Math.Max(0, (int)location.Y), MapTexture.Height - PLAYER_HEIGHT), PLAYER_WIDTH, PLAYER_HEIGHT);
+                MapTexture.GetData<Color>(0, playerBounds, result, 0, PLAYER_WIDTH * PLAYER_HEIGHT);
             }
 
             return result;
@@ -136,6 +136,16 @@ namespace XnaGooseSpike
 		public override void Update(Microsoft.Xna.Framework.GameTime time)
 		{
 			base.Update(time);
+
+            if (this.HasWon)
+            {
+                this.isForward = (time.TotalGameTime.TotalMilliseconds % 200) < 100;
+            }
+
+            if (this.IsDead || this.HasWon)
+            {
+                return;
+            }
 
 			if (this.isMoving)
 			{
@@ -183,47 +193,28 @@ namespace XnaGooseSpike
 				}
 			}
 
-            if (this.HasWon)
-            {
-                this.isForward = (time.TotalGameTime.TotalMilliseconds % 200) < 100;
-            }
 		}
 
 		private int GroundLevelIntersection(Vector2 location)
 		{
-			try
+			Color[] rect = GetMapIntersectionRectangle(location);
+			for (int i = PLAYER_HEIGHT - 1; i >= 0; i--)
 			{
-				Color[] rect = GetMapIntersectionRectangle(location);
-				for (int i = PLAYER_HEIGHT - 1; i >= 0; i--)
+				bool hasBlack = false;
+				for (int j = 0; j < PLAYER_WIDTH; j++)
 				{
-					bool hasBlack = false;
-					for (int j = 0; j < PLAYER_WIDTH; j++)
+                    if (rect[PLAYER_WIDTH * i + j] == Color.Black)
 					{
-                        if (rect[PLAYER_WIDTH * i + j] == Color.Black)
-						{
-							hasBlack = true;
-						}
-					}
-					if (!hasBlack)
-					{
-						return PLAYER_HEIGHT - 1 - i;
+						hasBlack = true;
 					}
 				}
-				return PLAYER_HEIGHT;
+				if (!hasBlack)
+				{
+					return PLAYER_HEIGHT - 1 - i;
+				}
 			}
-			catch { }
 
-			return 0;
-		}
-
-		Color[,] ConvertArrayToRectangle(Color[] color)
-		{
-			var answer = new Color[PLAYER_HEIGHT, PLAYER_WIDTH];
-			for (int i = 0; i < color.Length; i++)
-			{
-				answer[i / PLAYER_WIDTH, i % PLAYER_WIDTH] = color[i];
-			}
-			return answer;
+			return PLAYER_HEIGHT;
 		}
 
 		public void MoveForward()
@@ -257,7 +248,7 @@ namespace XnaGooseSpike
             if (this.IsDead || this.HasWon) return;
             this.isDead = true;
             this.Stop();
-            this.Jump();
+            //this.Jump();
         }
 
         public void Stop()
