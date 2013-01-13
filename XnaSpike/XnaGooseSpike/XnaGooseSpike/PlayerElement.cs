@@ -118,12 +118,19 @@ namespace XnaGooseSpike
 			return false;
 		}
 
-		private Color[] GetMapIntersectionRectangle(Vector2 location)
+        private static object syncObj = new object();
+        Color[] resultBag = new Color[PLAYER_WIDTH * PLAYER_HEIGHT];
+		
+        private Color[] GetMapIntersectionRectangle(Vector2 location)
 		{
-			var result = new Color[PLAYER_WIDTH * PLAYER_HEIGHT];
-			MapTexture.GetData<Color>(0, new Rectangle((int)location.X, (int)location.Y, PLAYER_WIDTH, PLAYER_HEIGHT),
-				result, 0, PLAYER_WIDTH * PLAYER_HEIGHT);
-			return result;
+            var result = resultBag;
+            lock (syncObj)
+            {
+                MapTexture.GetData<Color>(0, new Rectangle((int)location.X, (int)location.Y, PLAYER_WIDTH, PLAYER_HEIGHT),
+                    result, 0, PLAYER_WIDTH * PLAYER_HEIGHT);
+            }
+
+            return result;
 		}
 
 		public override void Update(Microsoft.Xna.Framework.GameTime time)
@@ -186,13 +193,13 @@ namespace XnaGooseSpike
 		{
 			try
 			{
-				Color[,] rect = ConvertArrayToRectangle(GetMapIntersectionRectangle(location));
+				Color[] rect = GetMapIntersectionRectangle(location);
 				for (int i = PLAYER_HEIGHT - 1; i >= 0; i--)
 				{
 					bool hasBlack = false;
 					for (int j = 0; j < PLAYER_WIDTH; j++)
 					{
-						if (rect[i, j] == Color.Black)
+                        if (rect[PLAYER_WIDTH * i + j] == Color.Black)
 						{
 							hasBlack = true;
 						}

@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Threading.Tasks;
 
 namespace XnaGooseSpike
 {
@@ -32,10 +33,11 @@ namespace XnaGooseSpike
 
         public virtual void Update(GameTime gameTime) 
         {
-            foreach (SceneElement element in this.Elements)
-            {
-                element.Update(gameTime);
-            }
+            //foreach (SceneElement element in this.Elements)
+            //{
+            //    element.Update(gameTime);
+            //}
+            Parallel.ForEach(this.Elements, x => x.Update(gameTime));
         }
 
         public void Draw(SpriteBatch batch)
