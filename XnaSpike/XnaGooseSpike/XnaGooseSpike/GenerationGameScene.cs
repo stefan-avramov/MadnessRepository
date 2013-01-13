@@ -16,7 +16,7 @@ namespace XnaGooseSpike
     class GenerationGameScene : GameScene
     {
         List<PlayerInfo> players;
-        double speedMultiplier = 2.0;
+        double speedMultiplier = 1.0;
         int playersCount;
         bool started = false;
 

@@ -82,14 +82,15 @@ namespace XnaGooseSpike
             }
 
             Color[] myColors = GetMapIntersectionRectangle(value);
-            bool isValid = !myColors.Contains(Color.Black);
+            bool isValid = !myColors.Contains(ColorConsts.SolidWallColor);
             if (isValid)
             {
-                if (myColors.Contains(Color.Red))
+                if (myColors.Contains(ColorConsts.DieColor))
                 {
                     this.Die();
                 }
-                if (myColors.Contains(new Color(0f, 1f, 0f)))
+
+                if (myColors.Contains(ColorConsts.WinColor))
                 {
                     this.HasWon = true;
                 }
@@ -103,9 +104,9 @@ namespace XnaGooseSpike
             if (value.X < 0 || value.Y < 0) return false;
             
             Color[] myColors = GetMapIntersectionRectangle(value);
-            bool isValid = !myColors.Contains(Color.Black);
+            bool isValid = !myColors.Contains(ColorConsts.SolidWallColor);
             return isValid;
-        }
+        } 
 
         private static object syncObj = new object();
         Color[] resultBag = new Color[PLAYER_WIDTH * PLAYER_HEIGHT];
@@ -239,7 +240,7 @@ namespace XnaGooseSpike
             if (this.IsDead || this.HasWon) return;
             this.isDead = true;
             this.Stop();
-            this.Jump();
+			DeathLogger.IncreaseDeathCount();
         }
 
         public void Stop()

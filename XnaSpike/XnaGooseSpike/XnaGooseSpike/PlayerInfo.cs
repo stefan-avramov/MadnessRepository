@@ -42,6 +42,7 @@ namespace XnaGooseSpike
             int index = (int)((gameTime.TotalGameTime - start).TotalMilliseconds / this.ActionDuration);
             if (index < 0 || index >= Actions.Count)
             {
+                Player.Die();
                 return;
             }
 

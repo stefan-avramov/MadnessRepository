@@ -72,6 +72,8 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorConsts.cs" />
+    <Compile Include="DeathLogger.cs" />
     <Compile Include="FpsLogger.cs" />
     <Compile Include="GameScene.cs" />
     <Compile Include="GenerationGameScene.cs" />
