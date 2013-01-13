@@ -20,7 +20,8 @@ namespace XnaGooseSpike
         SpriteBatch spriteBatch;
         GameScene scene;
 		FpsLogger fpsLogger;
-        
+		DeathLogger deathLogger;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -53,10 +54,11 @@ namespace XnaGooseSpike
 
             Texture2D background = Content.Load<Texture2D>("level1");
 
-            this.scene = new GenerationGameScene(GraphicsDevice, background, 100);
+            this.scene = new GenerationGameScene(GraphicsDevice, background, 500);
             //this.scene = new SinglePlayerGameScene(GraphicsDevice, background);
             this.scene.LoadContent(Content);
-			this.fpsLogger = new FpsLogger(this.Content); 
+			this.fpsLogger = new FpsLogger(this.Content);
+			this.deathLogger = new DeathLogger(this.Content);
         }
 
         /// <summary>
@@ -97,6 +99,7 @@ namespace XnaGooseSpike
             spriteBatch.Begin();
             this.scene.Draw(spriteBatch);
             this.fpsLogger.Draw(gameTime, spriteBatch);
+			this.deathLogger.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

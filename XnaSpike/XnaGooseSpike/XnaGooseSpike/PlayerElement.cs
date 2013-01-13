@@ -79,43 +79,31 @@ namespace XnaGooseSpike
             {
                 return;
             }
-            try
-            {
-                Color[] myColors = GetMapIntersectionRectangle(value);
-                bool isValid = !myColors.Contains(Color.Black);
-                if (isValid)
-                {
-                    if (myColors.Contains(Color.Red))
-                    {
-                        this.Die();
-                    }
-                    if (myColors.Contains(new Color(0f,1f,0f)))
-                    {
-                        this.HasWon = true;
-                    }
-                }
 
-                base.Location = value;
-            }
-            catch
+            Color[] myColors = GetMapIntersectionRectangle(value);
+            bool isValid = !myColors.Contains(Color.Black);
+            if (isValid)
             {
-            } 
+                if (myColors.Contains(Color.Red))
+                {
+                    this.Die();
+                }
+                if (myColors.Contains(new Color(0f,1f,0f)))
+                {
+                    this.HasWon = true;
+                }
+            }
+
+            base.Location = value;
         }
 
 		private bool IsLocationValid(Vector2 value)
 		{
 			if (value.X < 0 || value.Y < 0) return false;
-			try
-			{
-				Color[] myColors = GetMapIntersectionRectangle(value);
-				bool isValid = !myColors.Contains(Color.Black);  
-                return isValid;
-			}
-			catch
-			{
-			}
 
-			return false;
+			Color[] myColors = GetMapIntersectionRectangle(value);
+			bool isValid = !myColors.Contains(Color.Black);  
+            return isValid;
 		}
 
         private static object syncObj = new object();
@@ -248,6 +236,7 @@ namespace XnaGooseSpike
             if (this.IsDead || this.HasWon) return;
             this.isDead = true;
             this.Stop();
+			DeathLogger.IncreaseDeathCount();
             //this.Jump();
         }
 
