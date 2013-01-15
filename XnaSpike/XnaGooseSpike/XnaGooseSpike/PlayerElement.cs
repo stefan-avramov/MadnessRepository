@@ -52,7 +52,7 @@ namespace XnaGooseSpike
             }
         }
 
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
             this.framesCount = 2;
             this.framesPerSec = 12;

@@ -54,7 +54,7 @@ namespace XnaGooseSpike
 
             Texture2D background = Content.Load<Texture2D>("level1");
 
-            this.scene = new GenerationGameScene(GraphicsDevice, background, 100);
+            this.scene = new GenerationGameScene(GraphicsDevice, background, 1000);
             //this.scene = new SinglePlayerGameScene(GraphicsDevice, background);
             this.scene.LoadContent(Content);
 			this.fpsLogger = new FpsLogger(this.Content);

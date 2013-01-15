@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace XnaGooseSpike
 {
@@ -29,5 +30,7 @@ namespace XnaGooseSpike
         }
 
         public abstract void DrawFrame(SpriteBatch batch, Vector2 screenPos);
+
+		public abstract void LoadContent(ContentManager manager);
     }
 }

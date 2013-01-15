@@ -19,12 +19,14 @@ namespace XnaGooseSpike
         double speedMultiplier = 1.0;
         int playersCount;
         bool started = false;
+		List<CoinElement> coins;
 
         public GenerationGameScene(GraphicsDevice device, Texture2D backgroundTexture, int playersCount)
         : base(device, backgroundTexture)
         {
             this.playersCount = playersCount;
             this.InitializePlayers();
+			this.InitializeCoins();
         }
 
         protected virtual void InitializePlayers()
@@ -38,12 +40,22 @@ namespace XnaGooseSpike
             }
         }
 
+		private void InitializeCoins()
+		{
+			this.coins = new List<CoinElement>()
+			{
+				new CoinElement(780, 360),
+				new CoinElement(520, 550),
+			};
+			this.Elements.AddRange(this.coins);
+		}
+
         public override void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
         {
             base.LoadContent(Content);
-            foreach (PlayerInfo info in this.players)
+            foreach (SceneElement element in this.Elements)
             {
-                info.Player.LoadContent(Content);
+                element.LoadContent(Content);
             }
         }
 
