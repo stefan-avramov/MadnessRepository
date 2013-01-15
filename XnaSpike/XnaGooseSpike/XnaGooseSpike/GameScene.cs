@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Threading.Tasks;
 
-namespace XnaGooseSpike
+namespace XnaGooseGame
 {
     class GameScene
     {

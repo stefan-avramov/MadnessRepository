@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XnaGooseSpike", "XnaGooseSpike\XnaGooseSpike\XnaGooseSpike.csproj", "{2A177CCB-E67B-463F-8D73-59CDE326076B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XnaGooseGame", "XnaGooseSpike\XnaGooseSpike\XnaGooseGame.csproj", "{2A177CCB-E67B-463F-8D73-59CDE326076B}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "XnaGooseSpikeContent", "XnaGooseSpike\XnaGooseSpikeContent\XnaGooseSpikeContent.contentproj", "{5F4A7D4A-F5F7-425C-88C8-3ED41C7CD64A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XnaGooseGameContent", "XnaGooseSpike\XnaGooseSpikeContent\XnaGooseGameContent.contentproj", "{5F4A7D4A-F5F7-425C-88C8-3ED41C7CD64A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher", "Launcher\Launcher.csproj", "{C54FE3BF-5C83-4F42-AD2C-E866B3126FEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{2A177CCB-E67B-463F-8D73-59CDE326076B}.Release|x86.Build.0 = Release|x86
 		{5F4A7D4A-F5F7-425C-88C8-3ED41C7CD64A}.Debug|x86.ActiveCfg = Debug|x86
 		{5F4A7D4A-F5F7-425C-88C8-3ED41C7CD64A}.Release|x86.ActiveCfg = Release|x86
+		{C54FE3BF-5C83-4F42-AD2C-E866B3126FEF}.Debug|x86.ActiveCfg = Debug|x86
+		{C54FE3BF-5C83-4F42-AD2C-E866B3126FEF}.Debug|x86.Build.0 = Debug|x86
+		{C54FE3BF-5C83-4F42-AD2C-E866B3126FEF}.Release|x86.ActiveCfg = Release|x86
+		{C54FE3BF-5C83-4F42-AD2C-E866B3126FEF}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
