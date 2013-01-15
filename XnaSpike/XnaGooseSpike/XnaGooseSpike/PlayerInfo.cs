@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System;
 
-namespace XnaGooseSpike
+namespace XnaGooseGame
 {
     class PlayerInfo
     {

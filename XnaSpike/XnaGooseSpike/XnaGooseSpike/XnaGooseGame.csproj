@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XnaGooseSpike</RootNamespace>
-    <AssemblyName>XnaGooseSpike</AssemblyName>
+    <RootNamespace>XnaGooseGame</RootNamespace>
+    <AssemblyName>Game</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
@@ -16,8 +16,9 @@
     <XnaProfile>HiDef</XnaProfile>
     <XnaCrossPlatformGroupID>5adc832d-d371-46fa-9936-7f9643aad7b6</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
-    <ApplicationIcon>Game.ico</ApplicationIcon>
+    <ApplicationIcon>duck.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -30,7 +31,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -38,7 +38,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\x86\Debug</OutputPath>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -50,7 +50,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\x86\Release</OutputPath>
+    <OutputPath>..\..\bin\Release\</OutputPath>
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -76,6 +76,7 @@
     <Compile Include="ColorConsts.cs" />
     <Compile Include="DeathLogger.cs" />
     <Compile Include="FpsLogger.cs" />
+    <Compile Include="GameMode.cs" />
     <Compile Include="GameScene.cs" />
     <Compile Include="GenerationGameScene.cs" />
     <Compile Include="PlayerElement.cs" />
@@ -87,15 +88,17 @@
     <Compile Include="SinglePlayerGameScene.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="duck.ico" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XnaGooseSpikeContent\XnaGooseSpikeContent.contentproj">
-      <Name>XnaGooseSpikeContent</Name>
+    <ProjectReference Include="..\XnaGooseSpikeContent\XnaGooseGameContent.contentproj">
+      <Name>XnaGooseGameContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{5F4A7D4A-F5F7-425C-88C8-3ED41C7CD64A}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace XnaGooseSpike
+namespace XnaGooseGame
 {
     /// <summary>
     /// This is the main type for your game
@@ -22,8 +22,16 @@ namespace XnaGooseSpike
 		FpsLogger fpsLogger;
 		DeathLogger deathLogger;
 
-        public Game1()
+        GameMode mode;
+        int level;
+        int gooseCount;
+
+        public Game1(GameMode mode, int level, int gooseCount)
         {
+            this.mode = mode;
+            this.level = level;
+            this.gooseCount = gooseCount;
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = 672;
@@ -54,7 +62,20 @@ namespace XnaGooseSpike
 
             Texture2D background = Content.Load<Texture2D>("level1");
 
-            this.scene = new GenerationGameScene(GraphicsDevice, background, 1000);
+            switch (this.mode)
+            {
+                case GameMode.Single:
+                    this.scene = new SinglePlayerGameScene(GraphicsDevice, background);
+                    break;
+                case GameMode.GeneticAlgorithm1:
+                    this.scene = new GenerationGameScene(GraphicsDevice, background, this.gooseCount);
+                    break;
+                case GameMode.Credits:
+                default:
+                   // this.scene = new CreditsGameScene(GraphicsDevice, null);
+                    break;
+            }
+            
             //this.scene = new SinglePlayerGameScene(GraphicsDevice, background);
             this.scene.LoadContent(Content);
 			this.fpsLogger = new FpsLogger(this.Content);
