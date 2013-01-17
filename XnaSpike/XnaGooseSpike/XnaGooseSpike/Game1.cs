@@ -38,7 +38,7 @@ namespace XnaGooseGame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = VIEWPORT_HEIGHT;
-            graphics.PreferredBackBufferWidth = VIEWPORT_HEIGHT; 
+            graphics.PreferredBackBufferWidth = VIEWPORT_WIDTH; 
         }
 
         /// <summary>

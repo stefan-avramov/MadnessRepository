@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Media;
 
 namespace XnaGooseGame
 {
@@ -34,6 +35,14 @@ namespace XnaGooseGame
             //{
             //    element.Update(gameTime);
             //}
+            if (!this.musicPlaying && GameLevelManager.CurrentLevel.MusicTheme != null)
+            {
+                MediaPlayer.IsRepeating = true;
+                MediaPlayer.Volume = 0.1f;
+                MediaPlayer.Play(GameLevelManager.CurrentLevel.MusicTheme);
+                this.musicPlaying = true;
+            }
+
             Parallel.ForEach(this.Elements, x => x.Update(gameTime));
         }
 
@@ -62,5 +71,7 @@ namespace XnaGooseGame
         {
             
         }
+
+        public bool musicPlaying = false;
     }
 }

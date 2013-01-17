@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
 
 namespace XnaGooseGame
 {
@@ -18,8 +19,11 @@ namespace XnaGooseGame
     {
         List<MapSegment> segments;
         private Color[] buffer = new Color[PlayerElement.PLAYER_WIDTH * PlayerElement.PLAYER_HEIGHT];
-        public GameLevel(IEnumerable<Texture2D> levelTextures, IEnumerable<Texture2D> mapTextures)
+        public Song MusicTheme { get; private set; }
+
+        public GameLevel(IEnumerable<Texture2D> levelTextures, IEnumerable<Texture2D> mapTextures, Song song = null)
         {
+            this.MusicTheme = song;
             segments = new List<MapSegment>();
             
             foreach (Texture2D texture in levelTextures)
@@ -143,7 +147,7 @@ namespace XnaGooseGame
     public static class GameLevelManager
     {
         public static GameLevel CurrentLevel { get; private set; }
-
+        
         public static void LoadLevel(int levelNumber, ContentManager manager)
         {
             if (levelNumber == 1)
@@ -157,7 +161,10 @@ namespace XnaGooseGame
             Texture2D levelTexture = manager.Load<Texture2D>("level1");
             Texture2D map0Texture = manager.Load<Texture2D>("map0");
             Texture2D mapTexture = manager.Load<Texture2D>("map");
-            CurrentLevel = new GameLevel(new Texture2D[] { levelTexture, levelTexture, levelTexture }, new Texture2D[] { map0Texture, map0Texture, mapTexture });
+            CurrentLevel = new GameLevel(
+                new Texture2D[] { levelTexture, levelTexture, levelTexture }, 
+                new Texture2D[] { map0Texture, map0Texture, mapTexture },
+                manager.Load<Song>("music"));
         }
     }
 }
