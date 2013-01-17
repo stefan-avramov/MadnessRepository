@@ -15,7 +15,7 @@ namespace XnaGooseGame
 
     class GenerationGameScene : GameScene
     {
-        List<PlayerInfo> players;
+        List<PlayerController> players;
         double speedMultiplier = 1.0;
         int playersCount;
         bool started = false;
@@ -30,10 +30,10 @@ namespace XnaGooseGame
 
         protected virtual void InitializePlayers()
         {
-            this.players = new List<PlayerInfo>();
+			this.players = new List<PlayerController>();
             for (int i = 0; i < playersCount; i++)
             {
-                PlayerInfo info = new PlayerInfo(new PlayerElement());
+				PlayerController info = new PlayerController(new PlayerElement());
                 this.players.Add(info);
                 this.Elements.Add(info.Player);
             }
@@ -70,19 +70,9 @@ namespace XnaGooseGame
                 Start(gameTime);
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                this.Offset = new Vector2(this.Offset.X + 20, 0);
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                this.Offset = new Vector2(this.Offset.X - 20, 0);
-            }
-
             if (this.started)
             {
-                foreach (PlayerInfo info in this.players)
+				foreach (PlayerController info in this.players)
                 {
                     info.Update(gameTime);
                 }
@@ -95,7 +85,7 @@ namespace XnaGooseGame
         {
             if (started) return;
             started = true;
-            foreach (PlayerInfo info in this.players)
+			foreach (PlayerController info in this.players)
             {
                 info.Start(gameTime);
             }

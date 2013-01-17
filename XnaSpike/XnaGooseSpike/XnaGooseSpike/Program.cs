@@ -6,8 +6,8 @@ namespace XnaGooseGame
     static class Program
     {
         const int DEFAULT_LEVEL = 1;
-        const int DEFAULT_COUNT = 200;
-        const GameMode DEFAULT_MODE = GameMode.GeneticAlgorithm1;
+        const int DEFAULT_COUNT = 20;
+		const GameMode DEFAULT_MODE = GameMode.BestGenerationAlgorithm;
 
         /// <summary>
         /// The main entry point for the application.
@@ -51,6 +51,9 @@ namespace XnaGooseGame
                                 case "algo2":
                                     mode = GameMode.GeneticAlgorithm2;
                                     break;
+								case "algoBest":
+                                    mode = GameMode.BestGenerationAlgorithm;
+									break;
                                 case "credits":
                                     mode = GameMode.Credits;
                                     break;

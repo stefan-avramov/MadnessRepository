@@ -23,7 +23,7 @@ namespace XnaGooseGame
         SpriteBatch spriteBatch;
         GameScene scene;
 		FpsLogger fpsLogger;
-		DeathLogger deathLogger;
+		PopulatonLogger deathLogger;
 
         GameMode mode;
         int level;
@@ -73,6 +73,9 @@ namespace XnaGooseGame
                 case GameMode.GeneticAlgorithm1:
                     this.scene = new GenerationGameScene(this.gooseCount);
                     break;
+				case GameMode.BestGenerationAlgorithm:
+					this.scene = new BestGenerationGameScene(this.gooseCount);
+					break;
                 case GameMode.Credits:
                 default:
                    // this.scene = new CreditsGameScene(GraphicsDevice, null);
@@ -82,7 +85,7 @@ namespace XnaGooseGame
             //this.scene = new SinglePlayerGameScene(GraphicsDevice, background);
             this.scene.LoadContent(Content);
 			this.fpsLogger = new FpsLogger(this.Content);
-			this.deathLogger = new DeathLogger(this.Content);
+			this.deathLogger = new PopulatonLogger(this.Content);
         }
 
         /// <summary>

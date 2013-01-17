@@ -74,17 +74,20 @@
   <ItemGroup>
     <Compile Include="CoinElement.cs" />
     <Compile Include="ColorConsts.cs" />
-    <Compile Include="DeathLogger.cs" />
+    <Compile Include="PopulatonLogger.cs" />
     <Compile Include="FpsLogger.cs" />
     <Compile Include="GameLevel.cs" />
     <Compile Include="GameMode.cs" />
     <Compile Include="GameScene.cs" />
     <Compile Include="GenerationGameScene.cs" />
+    <Compile Include="PlayerController.cs" />
+    <Compile Include="BestGenerationGameScene.cs" />
     <Compile Include="PlayerElement.cs" />
-    <Compile Include="PlayerInfo.cs" />
+    <Compile Include="PredefinedPlayerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="RandomGenerator.cs" />
     <Compile Include="SceneElement.cs" />
     <Compile Include="SinglePlayerGameScene.cs" />
   </ItemGroup>

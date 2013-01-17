@@ -10,6 +10,7 @@ namespace XnaGooseGame
         Single,
         GeneticAlgorithm1,
         GeneticAlgorithm2,
+		BestGenerationAlgorithm,
         Credits
     }
 }

@@ -10,8 +10,8 @@ namespace XnaGooseGame
 {
     class PlayerElement : SceneElement
     {
-        private int framesCount;
-        private int framesPerSec;
+		private readonly int framesCount;
+		private readonly int framesPerSec;
 
         public const int PLAYER_HEIGHT = 42;
         public const int PLAYER_WIDTH = 57;
@@ -28,8 +28,15 @@ namespace XnaGooseGame
         double totalTime = 0;
         private bool isJumping;
         private const float jumpPower = 1.8f;
-        private float jumpSpeed = jumpPower;
-        private float jumpAccelaration = 0.07f;
+		private const float jumpAccelaration = 0.07f;
+		private float jumpSpeed = jumpPower;
+
+		public PlayerElement()
+		{
+			this.framesCount = 2;
+			this.framesPerSec = 12; 
+			PopulatonLogger.LogPlayerBirth();
+		}
 
         public bool IsDead
         {
@@ -53,8 +60,6 @@ namespace XnaGooseGame
 
         public override void LoadContent(ContentManager content)
         {
-            this.framesCount = 2;
-            this.framesPerSec = 12; 
             this.Texture = content.Load<Texture2D>("goose");
         }
 
@@ -103,7 +108,8 @@ namespace XnaGooseGame
             bool isValid = !myColors.Contains(ColorConsts.SolidWallColor);
             return isValid;
         } 
-		 
+
+		// ToDo: to whomever needs these two? 
         private readonly Color[] resultBag = new Color[PLAYER_WIDTH * PLAYER_HEIGHT];
 		private readonly Color[] buffer = new Color[PLAYER_WIDTH * PLAYER_HEIGHT];
 
@@ -112,7 +118,7 @@ namespace XnaGooseGame
             var result = resultBag; 
             {
                 Rectangle playerBounds = new Rectangle((int)location.X, (int)location.Y, PLAYER_WIDTH, PLAYER_HEIGHT);
-                GameLevelManager.CurrentLevel.GetData(playerBounds, result,buffer, 0, PLAYER_WIDTH * PLAYER_HEIGHT);
+                GameLevelManager.CurrentLevel.GetData(playerBounds, result, buffer, 0, PLAYER_WIDTH * PLAYER_HEIGHT);
             }
 
             return result;
@@ -121,8 +127,6 @@ namespace XnaGooseGame
         public override void Update(Microsoft.Xna.Framework.GameTime time)
         {
             base.Update(time);
-
-            Vector2 oldLocation = this.Location;
 
             if (this.HasWon)
             {
@@ -171,15 +175,7 @@ namespace XnaGooseGame
             if (this.isJumping)
             {
                 this.jumpSpeed += jumpAccelaration * (float)(time.ElapsedGameTime.TotalMilliseconds / 18.5);
-                int intersectLevel = GroundLevelIntersection(Location);
-                if (intersectLevel > 0 && this.jumpSpeed > 0)
-                {
-                    this.jumpSpeed = jumpPower;
-                    this.isJumping = false;
-                    this.Location = new Vector2(Location.X - intersectLevel, Location.Y);
-                }
             }
-
         }
 
         private int GroundLevelIntersection(Vector2 location)
@@ -235,7 +231,7 @@ namespace XnaGooseGame
             if (this.IsDead || this.HasWon) return;
             this.isDead = true;
             this.Stop();
-			DeathLogger.IncreaseDeathCount();
+			PopulatonLogger.LogPlayerDeath();
         }
 
         public void Stop()
@@ -278,8 +274,25 @@ namespace XnaGooseGame
                 Rectangle sourcerect = new Rectangle(frame * PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
                 batch.Draw(this.Texture, screenPos, sourcerect, Color.White, 0f, new Vector2(), 1f,
                     isForward ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.5f);
-
             }
         }
+
+		public PlayerElement Clone()
+		{
+			PlayerElement newPlayer = new PlayerElement();
+			
+			newPlayer.Texture = this.Texture;
+			newPlayer.isMoving = this.isMoving;
+			newPlayer.isForward = this.isForward;
+			newPlayer.isDead = this.isDead;
+			newPlayer.hasWon = this.hasWon;
+			newPlayer.frame = this.frame;
+			newPlayer.totalTime = this.totalTime;
+			newPlayer.isJumping = this.isJumping;
+			newPlayer.jumpSpeed = this.jumpSpeed;
+			newPlayer.Location = this.Location;
+
+			return newPlayer;
+		}
     }
 }

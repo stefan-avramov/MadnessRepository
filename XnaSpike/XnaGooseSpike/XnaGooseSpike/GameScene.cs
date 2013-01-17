@@ -35,6 +35,17 @@ namespace XnaGooseGame
             //{
             //    element.Update(gameTime);
             //}
+
+			if (Keyboard.GetState().IsKeyDown(Keys.Left))
+			{
+				this.Offset = new Vector2(this.Offset.X + 20, 0);
+			}
+
+			if (Keyboard.GetState().IsKeyDown(Keys.Right))
+			{
+				this.Offset = new Vector2(this.Offset.X - 20, 0);
+			}
+
             if (!this.musicPlaying && GameLevelManager.CurrentLevel.MusicTheme != null)
             {
                 MediaPlayer.IsRepeating = true;
