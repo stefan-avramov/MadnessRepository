@@ -103,17 +103,16 @@ namespace XnaGooseGame
             bool isValid = !myColors.Contains(ColorConsts.SolidWallColor);
             return isValid;
         } 
-
-        private static object syncObj = new object();
-        Color[] resultBag = new Color[PLAYER_WIDTH * PLAYER_HEIGHT];
+		 
+        private readonly Color[] resultBag = new Color[PLAYER_WIDTH * PLAYER_HEIGHT];
+		private readonly Color[] buffer = new Color[PLAYER_WIDTH * PLAYER_HEIGHT];
 
         private Color[] GetMapIntersectionRectangle(Vector2 location)
         {
-            var result = resultBag;
-            lock (syncObj)
+            var result = resultBag; 
             {
                 Rectangle playerBounds = new Rectangle((int)location.X, (int)location.Y, PLAYER_WIDTH, PLAYER_HEIGHT);
-                GameLevelManager.CurrentLevel.GetData(playerBounds, result, 0, PLAYER_WIDTH * PLAYER_HEIGHT);
+                GameLevelManager.CurrentLevel.GetData(playerBounds, result,buffer, 0, PLAYER_WIDTH * PLAYER_HEIGHT);
             }
 
             return result;

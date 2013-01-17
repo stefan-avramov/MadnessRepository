@@ -6,7 +6,7 @@ namespace XnaGooseGame
     static class Program
     {
         const int DEFAULT_LEVEL = 1;
-        const int DEFAULT_COUNT = 100;
+        const int DEFAULT_COUNT = 200;
         const GameMode DEFAULT_MODE = GameMode.GeneticAlgorithm1;
 
         /// <summary>
