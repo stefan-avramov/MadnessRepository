@@ -13,8 +13,8 @@ namespace XnaGooseGame
         private int framesCount;
         private int framesPerSec;
 
-        private const int PLAYER_HEIGHT = 42;
-        private const int PLAYER_WIDTH = 57;
+        public const int PLAYER_HEIGHT = 42;
+        public const int PLAYER_WIDTH = 57;
 
         bool isForward = true;
         bool isMoving = false;
@@ -22,8 +22,7 @@ namespace XnaGooseGame
         bool isDead = false;
         bool hasWon = false;
 
-        public Texture2D Texture { get; set; }
-        public Texture2D MapTexture { get; set; }
+        public Texture2D Texture { get; set; } 
 
         int frame = 0;
         double totalTime = 0;
@@ -55,10 +54,8 @@ namespace XnaGooseGame
         public override void LoadContent(ContentManager content)
         {
             this.framesCount = 2;
-            this.framesPerSec = 12;
-
+            this.framesPerSec = 12; 
             this.Texture = content.Load<Texture2D>("goose");
-            this.MapTexture = content.Load<Texture2D>("map");
         }
 
         public override Vector2 Location
@@ -70,7 +67,6 @@ namespace XnaGooseGame
             set
             {
                 this.SetLocationCore(value);
-                Console.WriteLine(this.Location);
             }
         }
 
@@ -116,8 +112,8 @@ namespace XnaGooseGame
             var result = resultBag;
             lock (syncObj)
             {
-                Rectangle playerBounds = new Rectangle(Math.Min(Math.Max(0, (int)location.X), MapTexture.Width - PLAYER_WIDTH), Math.Min(Math.Max(0, (int)location.Y), MapTexture.Height - PLAYER_HEIGHT), PLAYER_WIDTH, PLAYER_HEIGHT);
-                MapTexture.GetData<Color>(0, playerBounds, result, 0, PLAYER_WIDTH * PLAYER_HEIGHT);
+                Rectangle playerBounds = new Rectangle((int)location.X, (int)location.Y, PLAYER_WIDTH, PLAYER_HEIGHT);
+                GameLevelManager.CurrentLevel.GetData(playerBounds, result, 0, PLAYER_WIDTH * PLAYER_HEIGHT);
             }
 
             return result;

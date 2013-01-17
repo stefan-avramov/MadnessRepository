@@ -76,6 +76,7 @@
     <Compile Include="ColorConsts.cs" />
     <Compile Include="DeathLogger.cs" />
     <Compile Include="FpsLogger.cs" />
+    <Compile Include="GameLevel.cs" />
     <Compile Include="GameMode.cs" />
     <Compile Include="GameScene.cs" />
     <Compile Include="GenerationGameScene.cs" />

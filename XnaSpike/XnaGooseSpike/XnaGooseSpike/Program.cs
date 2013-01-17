@@ -7,7 +7,7 @@ namespace XnaGooseGame
     {
         const int DEFAULT_LEVEL = 1;
         const int DEFAULT_COUNT = 100;
-        const GameMode DEFAULT_MODE = GameMode.Single;
+        const GameMode DEFAULT_MODE = GameMode.GeneticAlgorithm1;
 
         /// <summary>
         /// The main entry point for the application.

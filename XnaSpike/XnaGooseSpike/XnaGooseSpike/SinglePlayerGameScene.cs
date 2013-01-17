@@ -8,10 +8,11 @@ namespace XnaGooseGame
     {
         PlayerElement player;
 
-        public SinglePlayerGameScene(GraphicsDevice device, Texture2D backgroundTexture)
-        : base(device, backgroundTexture)
+        public SinglePlayerGameScene()
         {
             player = new PlayerElement();
+            player.Location = new Vector2(3900, 10);
+            this.Offset = new Vector2(-3800, 0);
             this.Elements.Add(player);
         }
 

@@ -21,8 +21,7 @@ namespace XnaGooseGame
         bool started = false;
 		List<CoinElement> coins;
 
-        public GenerationGameScene(GraphicsDevice device, Texture2D backgroundTexture, int playersCount)
-        : base(device, backgroundTexture)
+        public GenerationGameScene(int playersCount)
         {
             this.playersCount = playersCount;
             this.InitializePlayers();

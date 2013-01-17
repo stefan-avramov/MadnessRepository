@@ -16,6 +16,9 @@ namespace XnaGooseGame
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        public const int VIEWPORT_WIDTH = 890;
+        public const int VIEWPORT_HEIGHT = 672;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         GameScene scene;
@@ -34,8 +37,8 @@ namespace XnaGooseGame
 
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferHeight = 672;
-            graphics.PreferredBackBufferWidth = 890; 
+            graphics.PreferredBackBufferHeight = VIEWPORT_HEIGHT;
+            graphics.PreferredBackBufferWidth = VIEWPORT_HEIGHT; 
         }
 
         /// <summary>
@@ -59,16 +62,16 @@ namespace XnaGooseGame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            Texture2D background = Content.Load<Texture2D>("level1");
+            
+            GameLevelManager.LoadLevel(this.level, Content);
 
             switch (this.mode)
             {
                 case GameMode.Single:
-                    this.scene = new SinglePlayerGameScene(GraphicsDevice, background);
+                    this.scene = new SinglePlayerGameScene();
                     break;
                 case GameMode.GeneticAlgorithm1:
-                    this.scene = new GenerationGameScene(GraphicsDevice, background, this.gooseCount);
+                    this.scene = new GenerationGameScene(this.gooseCount);
                     break;
                 case GameMode.Credits:
                 default:

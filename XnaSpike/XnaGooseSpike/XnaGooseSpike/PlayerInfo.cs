@@ -26,7 +26,7 @@ namespace XnaGooseGame
             for (int i = 0; i < 300; i++)
             {
                 int next = rand.Next(0, 1000);
-                PlayerAction action = next < 100 ? PlayerAction.MoveBackward : next < 500 ? PlayerAction.Jump : PlayerAction.MoveForward;
+                PlayerAction action = next < 50 ? PlayerAction.MoveBackward : next < 700 ? PlayerAction.Jump : PlayerAction.MoveForward;
                 this.Actions.Add(action);
             }
         }

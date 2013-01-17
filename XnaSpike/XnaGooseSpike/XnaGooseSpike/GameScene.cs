@@ -12,13 +12,10 @@ namespace XnaGooseGame
     class GameScene
     {
         List<SceneElement> elements = new List<SceneElement>();
-        GraphicsDevice device;
-        Texture2D backgroundTexture;
 
-        public GameScene(GraphicsDevice device, Texture2D backgroundTexture)
+        public GameScene()
         {
-            this.device = device;
-            this.backgroundTexture = backgroundTexture;
+
         }
 
         public List<SceneElement> Elements
@@ -56,8 +53,9 @@ namespace XnaGooseGame
 
         protected virtual void OwnDraw(SpriteBatch batch)
         {
-            batch.Draw(backgroundTexture, Offset, null,
-                    Color.White, 0, new Vector2(0,0), 1, SpriteEffects.None, 0f);
+            //batch.Draw(backgroundTexture, Offset, null,
+            //        Color.White, 0, new Vector2(0,0), 1, SpriteEffects.None, 0f);
+            GameLevelManager.CurrentLevel.Draw(batch, Offset);
         }
 
         public virtual void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
