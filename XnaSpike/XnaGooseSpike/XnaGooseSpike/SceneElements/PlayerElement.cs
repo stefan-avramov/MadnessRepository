@@ -11,8 +11,12 @@ namespace XnaGooseGame
 		private readonly int framesCount;
 		private readonly int framesPerSec;
 
-		public const int PLAYER_HEIGHT = 42;
-		public const int PLAYER_WIDTH = 57;
+		public const int SPRITE_HEIGHT = 42;
+		public const int SPRITE_WIDTH = 57;
+
+		public const int PLAYER_WIDTH = 14;
+		public const int PLAYER_HEIGHT = SPRITE_HEIGHT;
+		public const int PLAYER_OFFSET = (SPRITE_WIDTH - PLAYER_WIDTH) / 2;
 
 		bool isForward = true;
 		bool isMoving = false;
@@ -34,6 +38,7 @@ namespace XnaGooseGame
 			this.framesCount = 2;
 			this.framesPerSec = 12; 
 			PopulatonLogger.LogPlayerBirth();
+			this.Location = new Vector2(10, 0);
 		}
 
 		public bool IsDead
@@ -119,7 +124,6 @@ namespace XnaGooseGame
 				Rectangle playerBounds = new Rectangle((int)location.X, (int)location.Y, PLAYER_WIDTH, PLAYER_HEIGHT);
 				GameLevelManager.CurrentLevel.GetData(playerBounds, result, buffer, 0, PLAYER_WIDTH * PLAYER_HEIGHT);
 			}
-
 			return result;
 		}
 
@@ -158,17 +162,25 @@ namespace XnaGooseGame
 				}
 			}
 
-			// epeck block
+			// epeck legacy block
 			{
-				Vector2 newLocation = new Vector2(this.Location.X, this.Location.Y + (float)time.ElapsedGameTime.TotalSeconds * 600f * jumpSpeed);
+				var totalElapsedSeconds = (float)time.ElapsedGameTime.TotalSeconds;
+				Vector2 newLocation = new Vector2(this.Location.X, this.Location.Y + totalElapsedSeconds * 600f * jumpSpeed);
 				int intersectLevel = GroundLevelIntersection(newLocation);
 				if (intersectLevel > 0 && this.jumpSpeed > 0)
 				{
-					newLocation = new Vector2(newLocation.X,   newLocation.Y - intersectLevel);
+					newLocation = new Vector2(newLocation.X, newLocation.Y - intersectLevel);
 					this.jumpSpeed = jumpPower;
 					this.isJumping = false;
 				}
+				double oldY = this.Location.Y;
 				this.Location = newLocation;
+
+				// if hit his head
+				if (totalElapsedSeconds > 1e-9 && oldY == this.Location.Y)
+				{
+					jumpSpeed = 0;
+				}
 			}
 
 			if (this.isJumping)
@@ -196,7 +208,7 @@ namespace XnaGooseGame
 				}
 			}
 
-			return PLAYER_HEIGHT;
+			return SPRITE_HEIGHT;
 		}
 
 		public void MoveForward()
@@ -240,13 +252,11 @@ namespace XnaGooseGame
 
 		public void Jump()
 		{
-			if (!this.IsOnGround() || this.isJumping)
+			if (this.IsOnGround())
 			{
-				return;
+				this.jumpSpeed = -jumpPower;
 			}
-
 			this.isJumping = true;
-			this.jumpSpeed = -jumpPower;
 		}
 
 		private bool IsOnGround()
@@ -256,21 +266,22 @@ namespace XnaGooseGame
 
 		public override void DrawFrame(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Microsoft.Xna.Framework.Vector2 screenPos)
 		{
+			screenPos.X -= PLAYER_OFFSET;
 			if (this.IsDead)
 			{
-				Rectangle sourcerect = new Rectangle(0, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT);
+				Rectangle sourcerect = new Rectangle(0, SPRITE_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT);
 				batch.Draw(this.Texture, screenPos, sourcerect, Color.White, 0f, new Vector2(), 1f,
 					isForward ? SpriteEffects.FlipVertically : SpriteEffects.FlipVertically | SpriteEffects.FlipHorizontally, 0.5f);
 			}
 			else if (this.HasWon)
 			{
-				Rectangle sourcerect = new Rectangle(PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT);
+				Rectangle sourcerect = new Rectangle(SPRITE_WIDTH, SPRITE_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT);
 				batch.Draw(this.Texture, screenPos, sourcerect, Color.White, 0f, new Vector2(), 1f,
 					isForward ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.5f);
 			}
 			else
 			{
-				Rectangle sourcerect = new Rectangle(frame * PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
+				Rectangle sourcerect = new Rectangle(frame * SPRITE_WIDTH, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
 				batch.Draw(this.Texture, screenPos, sourcerect, Color.White, 0f, new Vector2(), 1f,
 					isForward ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0.5f);
 			}
