@@ -38,6 +38,7 @@ namespace XnaGooseGame
 			this.framesCount = 2;
 			this.framesPerSec = 12; 
 			PopulatonLogger.LogPlayerBirth();
+			this.Location = new Vector2(10, 0);
 		}
 
 		public bool IsDead
@@ -79,7 +80,7 @@ namespace XnaGooseGame
 
 		private void SetLocationCore(Vector2 value)
 		{
-			if (this.HasWon || value.X + PLAYER_OFFSET < 0 || value.Y < 0)
+			if (this.HasWon || value.X < 0 || value.Y < 0)
 			{
 				return;
 			}
@@ -104,7 +105,7 @@ namespace XnaGooseGame
 
 		private bool IsLocationValid(Vector2 value)
 		{
-			if (value.X + PLAYER_OFFSET < 0 || value.Y < 0) return false;
+			if (value.X < 0 || value.Y < 0) return false;
 
 			Color[] myColors = GetMapIntersectionRectangle(value);
 			bool isValid = !myColors.Contains(ColorConsts.SolidWallColor);
@@ -119,7 +120,7 @@ namespace XnaGooseGame
 		{
 			var result = resultBag; 
 			{
-				Rectangle playerBounds = new Rectangle((int)location.X + PLAYER_OFFSET, (int)location.Y, PLAYER_WIDTH, PLAYER_HEIGHT);
+				Rectangle playerBounds = new Rectangle((int)location.X, (int)location.Y, PLAYER_WIDTH, PLAYER_HEIGHT);
 				GameLevelManager.CurrentLevel.GetData(playerBounds, result, buffer, 0, PLAYER_WIDTH * PLAYER_HEIGHT);
 			}
 			return result;
@@ -264,6 +265,7 @@ namespace XnaGooseGame
 
 		public override void DrawFrame(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Microsoft.Xna.Framework.Vector2 screenPos)
 		{
+			screenPos.X -= PLAYER_OFFSET;
 			if (this.IsDead)
 			{
 				Rectangle sourcerect = new Rectangle(0, SPRITE_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT);
