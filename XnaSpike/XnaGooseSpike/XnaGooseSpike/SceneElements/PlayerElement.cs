@@ -79,7 +79,7 @@ namespace XnaGooseGame
 
 		private void SetLocationCore(Vector2 value)
 		{
-			if (this.HasWon || value.X < 0 || value.Y < 0)
+			if (this.HasWon || value.X + PLAYER_OFFSET < 0 || value.Y < 0)
 			{
 				return;
 			}
@@ -104,7 +104,7 @@ namespace XnaGooseGame
 
 		private bool IsLocationValid(Vector2 value)
 		{
-			if (value.X < 0 || value.Y < 0) return false;
+			if (value.X + PLAYER_OFFSET < 0 || value.Y < 0) return false;
 
 			Color[] myColors = GetMapIntersectionRectangle(value);
 			bool isValid = !myColors.Contains(ColorConsts.SolidWallColor);
