@@ -34,11 +34,6 @@ namespace XnaGooseGame
 
 		public override void Update(GameTime gameTime)
 		{
-			if (Keyboard.GetState().IsKeyDown(Keys.Enter))
-			{
-				Start(gameTime);
-			}
-
 			if (this.started)
 			{
 				if (aliveControllers.Count < playersCount)
@@ -64,7 +59,7 @@ namespace XnaGooseGame
 			base.Update(gameTime);
 		}
 
-		private void Start(GameTime gameTime)
+		protected override void Start(GameTime gameTime)
 		{
 			if (!started)
 			{
@@ -74,6 +69,11 @@ namespace XnaGooseGame
 					info.Start(gameTime);
 				}
 			}
+		}
+
+		protected override IEnumerable<PlayerElement> GetPlayers()
+		{
+			return this.aliveControllers.Select(x => x.Player);
 		}
 	}
 }

@@ -17,7 +17,7 @@ namespace XnaGooseGame
 		private int visibleInterval = 1500;
 		private bool visible = true;
 
-		public FireSmokeElement(float x, float y) 
+		public FireSmokeElement(float x, float y)
 			: this(new Vector2(x, y))
 		{
 		}
@@ -62,7 +62,7 @@ namespace XnaGooseGame
 			}
 
 			Rectangle playerBounds = new Rectangle((int)player.Location.X, (int)player.Location.Y, PlayerElement.PLAYER_WIDTH, PlayerElement.PLAYER_HEIGHT);
-			Rectangle bounds = new Rectangle((int)this.Location.X, (int)this.Location.Y, WIDTH, HEIGHT);
+			Rectangle bounds = new Rectangle((int)this.Location.X + WIDTH / 4, (int)this.Location.Y + WIDTH / 4, WIDTH / 2, HEIGHT - WIDTH / 2);
 			return bounds.Intersects(playerBounds);
 		}
 	}

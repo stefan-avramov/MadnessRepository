@@ -41,6 +41,27 @@ namespace XnaGooseGame
 
 		public virtual void Update(GameTime gameTime) 
 		{
+			this.HandleInput(gameTime);
+
+			if (Game1.MUSIC_ENABLED && !this.musicPlaying && GameLevelManager.CurrentLevel.MusicTheme != null)
+			{
+				MediaPlayer.IsRepeating = true;
+				MediaPlayer.Volume = 0.1f;
+				MediaPlayer.Play(GameLevelManager.CurrentLevel.MusicTheme);
+				this.musicPlaying = true;
+			}
+
+			Parallel.ForEach(this.Elements, x => x.Update(gameTime));
+			Parallel.ForEach(this.GetPlayers(), x => HandleInteraction(x));
+		}
+
+		protected virtual void HandleInput(GameTime gameTime) 
+		{ 
+			if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+			{
+				this.Start(gameTime);
+			} 
+
 			if (Keyboard.GetState().IsKeyDown(Keys.Left))
 			{
 				this.Offset = new Vector2(this.Offset.X + 20, 0);
@@ -51,16 +72,21 @@ namespace XnaGooseGame
 				this.Offset = new Vector2(this.Offset.X - 20, 0);
 			}
 
-			if (!this.musicPlaying && GameLevelManager.CurrentLevel.MusicTheme != null)
+			if (Mouse.GetState().LeftButton == ButtonState.Pressed)
 			{
-				MediaPlayer.IsRepeating = true;
-				MediaPlayer.Volume = 0.1f;
-				MediaPlayer.Play(GameLevelManager.CurrentLevel.MusicTheme);
-				this.musicPlaying = true;
-			}
+				Vector2 offset = new Vector2(Mouse.GetState().X - mouseAnchor.X, Mouse.GetState().Y - mouseAnchor.Y);
+				this.Offset = new Vector2(this.Offset.X + (-offset.X * (float)gameTime.ElapsedGameTime.TotalSeconds * 10), 0);
 
-			Parallel.ForEach(this.Elements, x => x.Update(gameTime));
-			Parallel.ForEach(this.GetPlayers(), x => HandleInteraction(x));
+			}
+			else
+			{
+				mouseAnchor = new Point(Mouse.GetState().X, Mouse.GetState().Y);
+			}
+		}
+		Point mouseAnchor;
+		protected virtual void Start(GameTime gameTime)
+		{
+			throw new NotImplementedException();
 		}
 
 		private void HandleInteraction(PlayerElement player)

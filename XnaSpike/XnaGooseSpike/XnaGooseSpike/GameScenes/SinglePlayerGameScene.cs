@@ -20,6 +20,12 @@ namespace XnaGooseGame
 
 		public override void Update(GameTime gameTime)
 		{ 
+			base.Update(gameTime);
+			this.Offset = new Vector2(-this.player.Location.X + Game1.VIEWPORT_WIDTH / 2 - PlayerElement.PLAYER_WIDTH / 2, 0);
+		}
+
+		protected override void HandleInput(GameTime gameTime) 
+		{
 			if (Keyboard.GetState().IsKeyDown(Keys.Left) || Keyboard.GetState().IsKeyDown(Keys.A))
 			{
 				player.MoveBackward();
@@ -37,10 +43,6 @@ namespace XnaGooseGame
 			{
 				player.Jump();
 			}
-
-			base.Update(gameTime);
-
-			this.Offset = new Vector2(-this.player.Location.X + Game1.VIEWPORT_WIDTH / 2 - PlayerElement.PLAYER_WIDTH / 2, 0);
 		}
 
 		protected override System.Collections.Generic.IEnumerable<PlayerElement> GetPlayers()

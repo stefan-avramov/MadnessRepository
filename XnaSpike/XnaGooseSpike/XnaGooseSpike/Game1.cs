@@ -18,6 +18,7 @@ namespace XnaGooseGame
     {
         public const int VIEWPORT_WIDTH = 890;
         public const int VIEWPORT_HEIGHT = 672;
+		public const bool MUSIC_ENABLED = false;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -34,7 +35,7 @@ namespace XnaGooseGame
             this.mode = mode;
             this.level = level;
             this.gooseCount = gooseCount;
-
+			this.IsMouseVisible = true;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = VIEWPORT_HEIGHT;

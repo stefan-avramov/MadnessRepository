@@ -22,13 +22,15 @@ namespace XnaGooseGame
 			Texture2D map0Texture = manager.Load<Texture2D>("map0");
 			Texture2D mapTexture = manager.Load<Texture2D>("map");
 			CurrentLevel = new GameLevel(
-				new Texture2D[] { levelTexture, levelTexture, levelTexture },
-				new Texture2D[] { map0Texture, map0Texture, mapTexture },
+				new Texture2D[] { levelTexture, levelTexture },
+				new Texture2D[] { map0Texture, mapTexture },
 				manager.Load<Song>("music"));
 
 
-			CurrentLevel.InteractionObjects.Add(new AxeElement(4200, 250));
-			CurrentLevel.InteractionObjects.Add(new FireSmokeElement(4200, 380));
+			CurrentLevel.InteractionObjects.Add(new AxeElement(1600, 300));
+			CurrentLevel.InteractionObjects.Add(new AxeElement(7900, 590));
+			CurrentLevel.InteractionObjects.Add(new FireSmokeElement(4000, 380));
+			CurrentLevel.InteractionObjects.Add(new FireSmokeElement(5449, 290));
 		}
 
 		//TODO: add more levels

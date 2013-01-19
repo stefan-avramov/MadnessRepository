@@ -54,11 +54,10 @@ namespace XnaGooseGame
 			Point playerCenter = new Point(playerBounds.X + playerBounds.Width / 2, playerBounds.Y + playerBounds.Height / 2);
 			List<Point> points = new List<Point>()
 			{
-				//TODO: if we fix the bounding box of the goose, uncomment these
-				//new Point(playerBounds.Left, playerBounds.Top),
-				//new Point(playerBounds.Right, playerBounds.Top),
-				//new Point(playerBounds.Right, playerBounds.Bottom),
-				//new Point(playerBounds.Left, playerBounds.Bottom),
+				new Point(playerBounds.Left, playerBounds.Top),
+				new Point(playerBounds.Right, playerBounds.Top),
+				new Point(playerBounds.Right, playerBounds.Bottom),
+				new Point(playerBounds.Left, playerBounds.Bottom),
 				
 			    new Point(playerBounds.Left + playerBounds.Width / 2, playerBounds.Top),
 			    new Point(playerBounds.Right, playerBounds.Top  + playerBounds.Height /2),

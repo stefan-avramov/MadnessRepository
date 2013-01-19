@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace XnaGooseGame
 {
@@ -54,11 +55,6 @@ namespace XnaGooseGame
 				TimeSpan.FromMilliseconds(gameTime.ElapsedGameTime.TotalMilliseconds * speedMultiplier),
 				gameTime.IsRunningSlowly);
 
-			if (Keyboard.GetState().IsKeyDown(Keys.Enter))
-			{
-				Start(gameTime);
-			}
-
 			if (this.started)
 			{
 				foreach (PlayerController info in this.players)
@@ -77,7 +73,7 @@ namespace XnaGooseGame
 			
 		}
 
-		private void Start(GameTime gameTime)
+		protected override void Start(GameTime gameTime)
 		{
 			if (started) return;
 			started = true;
@@ -85,6 +81,11 @@ namespace XnaGooseGame
 			{
 				info.Start(gameTime);
 			}
+		}
+
+		protected override IEnumerable<PlayerElement> GetPlayers()
+		{
+			return this.players.Select(x => x.Player);
 		}
 	}
 }
