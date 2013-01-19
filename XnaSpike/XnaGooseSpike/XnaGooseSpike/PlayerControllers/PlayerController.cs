@@ -61,6 +61,9 @@ namespace XnaGooseGame
 					case PlayerAction.Jump:
 						Player.Jump();
 						break;
+					case PlayerAction.Stay:
+						Player.Stop();
+						break;
 				}
 
 				ActionsHistory.Add(action);
@@ -71,7 +74,7 @@ namespace XnaGooseGame
 		private PlayerAction GetNextAction()
 		{
 			int next = RandomGenerator.Next(0, 1000);
-			return next < 50 ? PlayerAction.MoveBackward : next < 700 ? PlayerAction.Jump : PlayerAction.MoveForward;
+			return next < 50 ? PlayerAction.MoveBackward : next < 500 ? PlayerAction.Jump :  next < 800 ? PlayerAction.MoveForward : PlayerAction.Stay;
 		}
 	}
 }

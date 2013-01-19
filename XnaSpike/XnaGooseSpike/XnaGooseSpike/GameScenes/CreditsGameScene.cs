@@ -5,7 +5,7 @@ using System.Text;
 
 namespace XnaGooseGame
 {
-	public class CreditsGameScene : GameScene
+	class CreditsGameScene : GameScene
 	{
 		protected override void HandleInput(Microsoft.Xna.Framework.GameTime gameTime)
 		{

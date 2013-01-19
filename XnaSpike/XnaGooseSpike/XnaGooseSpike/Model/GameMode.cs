@@ -3,11 +3,10 @@ using System.Linq;
 
 namespace XnaGooseGame
 {
-	public enum GameMode
+	enum GameMode
 	{
 		Single,
-		GeneticAlgorithm1,
-		GeneticAlgorithm2,
+		GeneticAlgorithm1, 
 		BestGenerationAlgorithm,
 		Credits
 	}

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace XnaGooseGame
 {
-	public static class GameLevelManager
+	static class GameLevelManager
 	{
 		public static GameLevel CurrentLevel { get; private set; }
           
@@ -31,6 +31,7 @@ namespace XnaGooseGame
 			CurrentLevel.InteractionObjects.Add(new AxeElement(7900, 590));
 			CurrentLevel.InteractionObjects.Add(new FireSmokeElement(4000, 380));
 			CurrentLevel.InteractionObjects.Add(new FireSmokeElement(5449, 290));
+			CurrentLevel.LoadCoints();
 		}
 
 		//TODO: add more levels

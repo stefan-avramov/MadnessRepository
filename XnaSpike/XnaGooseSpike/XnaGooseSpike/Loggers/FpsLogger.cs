@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace XnaGooseGame
 {
-	public class FpsLogger
+	class FpsLogger
 	{
 		private int previousSecondFramesCount = -1;
 		private int currentSecondFramesCount = 0;

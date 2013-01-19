@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace XnaGooseGame
 {
-	public class GameScene
+	class GameScene
 	{
 		public Vector2 Offset { get; set; }
 		

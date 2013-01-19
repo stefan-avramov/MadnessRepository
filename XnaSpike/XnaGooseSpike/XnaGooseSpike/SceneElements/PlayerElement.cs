@@ -3,10 +3,11 @@ using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace XnaGooseGame
 {
-	public class PlayerElement : SceneElement
+	class PlayerElement : SceneElement
 	{
 		private readonly int framesCount;
 		private readonly int framesPerSec;
@@ -24,7 +25,8 @@ namespace XnaGooseGame
 		bool isDead = false;
 		bool hasWon = false;
 
-		public Texture2D Texture { get; set; } 
+		public Texture2D Texture { get; set; }
+		public int CollectedValue { get; private set; }
 
 		int frame = 0;
 		double totalTime = 0;
@@ -32,6 +34,8 @@ namespace XnaGooseGame
 		private const float jumpPower = 1.8f;
 		private const float jumpAccelaration = 0.07f;
 		private float jumpSpeed = jumpPower;
+
+		private HashSet<CoinElement> coins = new HashSet<CoinElement>();
 
 		public PlayerElement()
 		{
@@ -257,6 +261,15 @@ namespace XnaGooseGame
 				this.jumpSpeed = -jumpPower;
 			}
 			this.isJumping = true;
+		}
+
+		public void CollectCoin(CoinElement coin)
+		{
+			if (!this.coins.Contains(coin))
+			{
+				this.coins.Add(coin);
+				this.CollectedValue += coin.Value;
+			}
 		}
 
 		private bool IsOnGround()

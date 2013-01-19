@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace XnaGooseGame
 {
-	public abstract class SceneElement
+	abstract class SceneElement
 	{
 		private Vector2 location;
 

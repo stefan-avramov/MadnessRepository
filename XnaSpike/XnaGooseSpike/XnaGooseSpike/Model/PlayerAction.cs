@@ -4,6 +4,7 @@ namespace XnaGooseGame
 	{
 		MoveForward = 0,
 		MoveBackward = 1,
-		Jump = 2
+		Jump = 2,
+		Stay = 3
 	}
 }

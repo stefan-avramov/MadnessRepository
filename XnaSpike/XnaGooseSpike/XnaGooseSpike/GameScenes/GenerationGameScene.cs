@@ -18,15 +18,9 @@ namespace XnaGooseGame
 		public GenerationGameScene(int playersCount)
 		{
 			this.playersCount = playersCount;
-			this.InitializePlayers();
-			this.InitializeCoins();
+			this.InitializePlayers(); 
 		}
-
-		protected virtual void InitializeDynamicObjects()
-		{
-			throw new NotImplementedException();
-		}
-
+		 
 		protected virtual void InitializePlayers()
 		{
 			this.players = new List<PlayerController>();
@@ -36,16 +30,6 @@ namespace XnaGooseGame
 				this.players.Add(info);
 				this.Elements.Add(info.Player);
 			}
-		}
-
-		protected virtual void InitializeCoins()
-		{
-			this.coins = new List<CoinElement>()
-			{
-				new CoinElement(780, 360),
-				new CoinElement(520, 550),
-			};
-			this.Elements.AddRange(this.coins);
 		}
 
 		public override void Update(GameTime gameTime)

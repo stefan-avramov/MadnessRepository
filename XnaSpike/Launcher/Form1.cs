@@ -52,12 +52,17 @@ namespace Launcher
 
         private void buttonAlgorithm1_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("game.exe", "-m algo1 -l " + this.GetSelectedLevel());
+            System.Diagnostics.Process.Start("game.exe", "-m algo1 -l " + this.GetSelectedLevel() + " -n 500");
         }
 
         private void buttonCredits_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("game.exe", "-m credits");
         }
+
+		private void buttonAlgorithm2_Click(object sender, EventArgs e)
+		{
+			System.Diagnostics.Process.Start("game.exe", "-m algoBest -l " + this.GetSelectedLevel());
+		}
     }
 }

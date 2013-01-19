@@ -14,11 +14,11 @@ namespace XnaGooseGame
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Microsoft.Xna.Framework.Game
+    class Game1 : Microsoft.Xna.Framework.Game
     {
         public const int VIEWPORT_WIDTH = 890;
         public const int VIEWPORT_HEIGHT = 672;
-		public const bool MUSIC_ENABLED = true;
+		public const bool MUSIC_ENABLED = false;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;

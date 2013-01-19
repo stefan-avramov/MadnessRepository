@@ -5,7 +5,7 @@ using System.Text;
 
 namespace XnaGooseGame
 {
-	public interface IInteractiveObject
+	interface IInteractiveObject
 	{
 		void Interact(PlayerElement player);
 		bool CanInteract(PlayerElement player);
