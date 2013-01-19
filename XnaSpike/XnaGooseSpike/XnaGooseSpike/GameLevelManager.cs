@@ -34,5 +34,15 @@ namespace XnaGooseGame
 		}
 
 		//TODO: add more levels
+
+		public static void LoadCredits(ContentManager manager)
+		{
+			Texture2D levelTexture = manager.Load<Texture2D>("credits");
+			
+			CurrentLevel = new GameLevel(
+				new Texture2D[] { levelTexture },
+				new Texture2D[] { levelTexture },
+				manager.Load<Song>("credits_theme"));
+		}
 	}
 }

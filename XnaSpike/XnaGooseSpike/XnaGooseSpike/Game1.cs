@@ -18,7 +18,7 @@ namespace XnaGooseGame
     {
         public const int VIEWPORT_WIDTH = 890;
         public const int VIEWPORT_HEIGHT = 672;
-		public const bool MUSIC_ENABLED = false;
+		public const bool MUSIC_ENABLED = true;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -63,8 +63,15 @@ namespace XnaGooseGame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-            GameLevelManager.LoadLevel(this.level, Content);
+
+			if (this.mode == GameMode.Credits)
+			{
+				GameLevelManager.LoadCredits(Content);
+			}
+			else
+			{
+				GameLevelManager.LoadLevel(this.level, Content);
+			}
 
             switch (this.mode)
             {
@@ -79,7 +86,7 @@ namespace XnaGooseGame
 					break;
                 case GameMode.Credits:
                 default:
-                   // this.scene = new CreditsGameScene(GraphicsDevice, null);
+                    this.scene = new CreditsGameScene();
                     break;
             }
             

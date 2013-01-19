@@ -11,9 +11,11 @@ namespace XnaGooseGame
 {
 	public class GameScene
 	{
-		List<SceneElement> elements = new List<SceneElement>();
 		public Vector2 Offset { get; set; }
+		
 		private bool musicPlaying = false;
+		private Point mouseAnchor;
+		private List<SceneElement> elements = new List<SceneElement>();
 
 		public List<SceneElement> Elements
 		{
@@ -83,7 +85,7 @@ namespace XnaGooseGame
 				mouseAnchor = new Point(Mouse.GetState().X, Mouse.GetState().Y);
 			}
 		}
-		Point mouseAnchor;
+		
 		protected virtual void Start(GameTime gameTime)
 		{
 			throw new NotImplementedException();
