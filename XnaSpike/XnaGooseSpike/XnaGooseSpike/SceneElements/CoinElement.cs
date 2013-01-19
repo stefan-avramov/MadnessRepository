@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace XnaGooseGame
 {
-	class CoinElement : SceneElement
+	class CoinElement : SceneElement, IInteractiveObject
 	{
 		private const int COIN_HEIGHT = 32;
 		private const int COIN_WIDTH = 24;
@@ -40,6 +40,17 @@ namespace XnaGooseGame
 		public override void LoadContent(Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
 			this.texture = manager.Load<Texture2D>("coin");
+		}
+
+		public void Interact(PlayerElement player)
+		{
+			//TODO: get coin
+		}
+
+
+		public bool CanInteract(PlayerElement player)
+		{
+			return false;
 		}
 	}
 }

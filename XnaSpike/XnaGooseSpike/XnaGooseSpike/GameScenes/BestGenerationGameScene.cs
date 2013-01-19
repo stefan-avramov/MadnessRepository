@@ -32,15 +32,6 @@ namespace XnaGooseGame
 			}
 		}
 
-		public override void LoadContent(ContentManager content)
-		{
-			base.LoadContent(content);
-			foreach (SceneElement element in this.Elements)
-			{
-				element.LoadContent(content);
-			}
-		}
-
 		public override void Update(GameTime gameTime)
 		{
 			if (Keyboard.GetState().IsKeyDown(Keys.Enter))

@@ -9,14 +9,11 @@ using Microsoft.Xna.Framework.Media;
 
 namespace XnaGooseGame
 {
-	class GameScene
+	public class GameScene
 	{
 		List<SceneElement> elements = new List<SceneElement>();
-
-		public GameScene()
-		{
-
-		}
+		public Vector2 Offset { get; set; }
+		private bool musicPlaying = false;
 
 		public List<SceneElement> Elements
 		{
@@ -26,15 +23,24 @@ namespace XnaGooseGame
 			}
 		}
 
-		public Vector2 Offset { get; set; }
+		public GameScene()
+		{
+			this.InitializeElements();
+		}
+
+		protected virtual void InitializeElements()
+		{
+			foreach (IInteractiveObject interactive in GameLevelManager.CurrentLevel.InteractionObjects)
+			{
+				if (interactive is SceneElement)
+				{
+					this.Elements.Add((SceneElement)interactive);
+				}
+			}
+		}
 
 		public virtual void Update(GameTime gameTime) 
 		{
-			//foreach (SceneElement element in this.Elements)
-			//{
-			//    element.Update(gameTime);
-			//}
-
 			if (Keyboard.GetState().IsKeyDown(Keys.Left))
 			{
 				this.Offset = new Vector2(this.Offset.X + 20, 0);
@@ -54,6 +60,18 @@ namespace XnaGooseGame
 			}
 
 			Parallel.ForEach(this.Elements, x => x.Update(gameTime));
+			Parallel.ForEach(this.GetPlayers(), x => HandleInteraction(x));
+		}
+
+		private void HandleInteraction(PlayerElement player)
+		{
+			foreach (IInteractiveObject obj in GameLevelManager.CurrentLevel.InteractionObjects)
+			{
+				if (obj.CanInteract(player))
+				{
+					obj.Interact(player);
+				}
+			}
 		}
 
 		public void Draw(SpriteBatch batch)
@@ -72,15 +90,20 @@ namespace XnaGooseGame
 
 		protected virtual void OwnDraw(SpriteBatch batch)
 		{
-			//batch.Draw(backgroundTexture, Offset, null,
-			//Color.White, 0, new Vector2(0,0), 1, SpriteEffects.None, 0f);
 			GameLevelManager.CurrentLevel.Draw(batch, Offset);
 		}
 
 		public virtual void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
 		{
+			foreach (SceneElement element in this.Elements)
+			{
+				element.LoadContent(Content);
+			}
 		}
 
-		public bool musicPlaying = false;
+		protected virtual IEnumerable<PlayerElement> GetPlayers()
+		{
+			return Enumerable.Empty<PlayerElement>();
+		}
 	}
 }

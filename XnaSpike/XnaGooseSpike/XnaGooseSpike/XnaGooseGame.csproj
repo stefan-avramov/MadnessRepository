@@ -72,6 +72,8 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameLevelManager.cs" />
+    <Compile Include="SceneElements\AxeElement.cs" />
     <Compile Include="SceneElements\CoinElement.cs" />
     <Compile Include="Model\ColorConsts.cs" />
     <Compile Include="Loggers\PopulatonLogger.cs" />
@@ -83,6 +85,8 @@
     <Compile Include="Model\PlayerAction.cs" />
     <Compile Include="PlayerControllers\PlayerController.cs" />
     <Compile Include="GameScenes\BestGenerationGameScene.cs" />
+    <Compile Include="SceneElements\FireSmokeElement.cs" />
+    <Compile Include="SceneElements\IInteractiveObject.cs" />
     <Compile Include="SceneElements\PlayerElement.cs" />
     <Compile Include="PlayerControllers\PredefinedPlayerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

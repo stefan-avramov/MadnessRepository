@@ -21,6 +21,11 @@ namespace XnaGooseGame
 			this.InitializeCoins();
 		}
 
+		protected virtual void InitializeDynamicObjects()
+		{
+			throw new NotImplementedException();
+		}
+
 		protected virtual void InitializePlayers()
 		{
 			this.players = new List<PlayerController>();
@@ -32,7 +37,7 @@ namespace XnaGooseGame
 			}
 		}
 
-		private void InitializeCoins()
+		protected virtual void InitializeCoins()
 		{
 			this.coins = new List<CoinElement>()
 			{
@@ -40,15 +45,6 @@ namespace XnaGooseGame
 				new CoinElement(520, 550),
 			};
 			this.Elements.AddRange(this.coins);
-		}
-
-		public override void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
-		{
-			base.LoadContent(Content);
-			foreach (SceneElement element in this.Elements)
-			{
-				element.LoadContent(Content);
-			}
 		}
 
 		public override void Update(GameTime gameTime)
@@ -72,6 +68,13 @@ namespace XnaGooseGame
 			}
 
 			base.Update(gameTime);
+
+			this.IntersectSceneObjects();
+		}
+
+		private void IntersectSceneObjects()
+		{
+			
 		}
 
 		private void Start(GameTime gameTime)

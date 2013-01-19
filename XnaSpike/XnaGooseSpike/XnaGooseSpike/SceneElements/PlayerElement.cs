@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace XnaGooseGame
 {
-	class PlayerElement : SceneElement
+	public class PlayerElement : SceneElement
 	{
 		private readonly int framesCount;
 		private readonly int framesPerSec;
@@ -105,9 +105,10 @@ namespace XnaGooseGame
 			Color[] myColors = GetMapIntersectionRectangle(value);
 			bool isValid = !myColors.Contains(ColorConsts.SolidWallColor);
 			return isValid;
-		} 
+		}
 
 		// ToDo: to whomever needs these two? 
+		// Do: these are needed to not create them evri taim.
 		private readonly Color[] resultBag = new Color[PLAYER_WIDTH * PLAYER_HEIGHT];
 		private readonly Color[] buffer = new Color[PLAYER_WIDTH * PLAYER_HEIGHT];
 

@@ -19,13 +19,16 @@ namespace XnaGooseGame
     public class GameLevel
     {
         List<MapSegment> segments;
+		public List<IInteractiveObject> InteractionObjects { get; private set; }
         public Song MusicTheme { get; private set; }
+		private static object syncObj = new object();
 
         public GameLevel(IEnumerable<Texture2D> levelTextures, IEnumerable<Texture2D> mapTextures, Song song = null)
         {
             this.MusicTheme = song;
             segments = new List<MapSegment>();
-            
+			InteractionObjects = new List<IInteractiveObject>();
+
             foreach (Texture2D texture in levelTextures)
             {
                 segments.Add(new MapSegment() { DisplayTexture = texture });
@@ -65,8 +68,7 @@ namespace XnaGooseGame
                 currentPoint.X += seg.DisplayTexture.Width;
             }
         } 
-
-		private static object syncObj = new object();
+		
         public void GetData(Microsoft.Xna.Framework.Rectangle playerBounds, Color[] result, Color[] buffer, int startIndex, int count)
         {
             Point currentPoint = new Point(0,0);
@@ -92,7 +94,7 @@ namespace XnaGooseGame
 					}
 					else
 					{
-						//throw new ArgumentException("Goose object intersects more than two level segments. Please increase the size of the segments to avoid this.");
+						throw new ArgumentException("Goose object intersects more than two level segments. Please increase the size of the segments to avoid this.");
 					}
 				}
 
@@ -151,37 +153,11 @@ namespace XnaGooseGame
         {
             for (int i = 0; i < bounds.Height; i++)
             {
-				//Array.Copy
-				//Array.Copy(buffer, i * playerBounds.Width + (bounds.Left - playerBounds.Left), result, i * bounds.Width, bounds.Width);
 				for (int j = 0; j < bounds.Width; j++)
 				{
 					result[i * playerBounds.Width + j + (bounds.Left - playerBounds.Left)] = buffer[i * bounds.Width + j];
 				}
             }
-        }
-    }
-
-    public static class GameLevelManager
-    {
-        public static GameLevel CurrentLevel { get; private set; }
-        
-        public static void LoadLevel(int levelNumber, ContentManager manager)
-        {
-            if (levelNumber == 1)
-            {
-                LoadLevel1(manager);
-            }
-        }
-
-        private static void LoadLevel1(ContentManager manager)
-        {
-            Texture2D levelTexture = manager.Load<Texture2D>("level1");
-            Texture2D map0Texture = manager.Load<Texture2D>("map0");
-            Texture2D mapTexture = manager.Load<Texture2D>("map");
-            CurrentLevel = new GameLevel(
-                new Texture2D[] { levelTexture, levelTexture, levelTexture }, 
-                new Texture2D[] { map0Texture, map0Texture, mapTexture },
-                manager.Load<Song>("music"));
         }
     }
 }

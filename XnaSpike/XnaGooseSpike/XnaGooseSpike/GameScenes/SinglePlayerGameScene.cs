@@ -8,37 +8,23 @@ namespace XnaGooseGame
 	{
 		PlayerElement player;
 
-		public SinglePlayerGameScene()
+		protected override void InitializeElements()
 		{
+			base.InitializeElements();
+
 			player = new PlayerElement();
 			player.Location = new Vector2(3900, 10);
 			this.Offset = new Vector2(-3800, 0);
 			this.Elements.Add(player);
 		}
 
-		public override void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
-		{
-			base.LoadContent(Content);
-			this.player.LoadContent(Content);
-		}
-
 		public override void Update(GameTime gameTime)
-		{
-			if (Keyboard.GetState().IsKeyDown(Keys.Left))
-			{
-				this.Offset = new Vector2(this.Offset.X + 20, 0);
-			}
-
-			if (Keyboard.GetState().IsKeyDown(Keys.Right))
-			{
-				this.Offset = new Vector2(this.Offset.X - 20, 0);
-			}
-
-			if (Keyboard.GetState().IsKeyDown(Keys.A))
+		{ 
+			if (Keyboard.GetState().IsKeyDown(Keys.Left) || Keyboard.GetState().IsKeyDown(Keys.A))
 			{
 				player.MoveBackward();
 			}
-			else if (Keyboard.GetState().IsKeyDown(Keys.D))
+			else if (Keyboard.GetState().IsKeyDown(Keys.Right) || Keyboard.GetState().IsKeyDown(Keys.D))
 			{
 				player.MoveForward();
 			}
@@ -53,6 +39,14 @@ namespace XnaGooseGame
 			}
 
 			base.Update(gameTime);
+
+			this.Offset = new Vector2(-this.player.Location.X + Game1.VIEWPORT_WIDTH / 2 - PlayerElement.PLAYER_WIDTH / 2, 0);
+		}
+
+		protected override System.Collections.Generic.IEnumerable<PlayerElement> GetPlayers()
+		{
+			yield return this.player;
+			yield break;
 		}
 	}
 }
