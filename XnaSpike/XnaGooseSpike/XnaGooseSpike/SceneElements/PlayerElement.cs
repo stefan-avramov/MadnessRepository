@@ -317,5 +317,19 @@ namespace XnaGooseGame
 
 			return newPlayer;
 		}
+
+		public void Reset()
+		{
+			this.isDead = false;
+			this.isJumping = false;
+			base.Location = new Vector2();
+			this.hasWon = false;
+			this.isMoving = false;
+			this.jumpSpeed = jumpPower;
+			this.frame = 0;
+			this.totalTime = 0;
+			this.CollectedValue = 0;
+			this.coins.Clear();
+		}
 	}
 }

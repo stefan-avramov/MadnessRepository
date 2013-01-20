@@ -1,4 +1,6 @@
 using System;
+using Microsoft.Xna.Framework;
+using System.IO;
 
 namespace XnaGooseGame
 {
@@ -6,7 +8,7 @@ namespace XnaGooseGame
     static class Program
     {
         const int DEFAULT_LEVEL = 1;
-        const int DEFAULT_COUNT = 500;
+        const int DEFAULT_COUNT = 100;
 		const GameMode DEFAULT_MODE = GameMode.GeneticAlgorithm1;
 		
         /// <summary>

@@ -77,7 +77,7 @@ namespace XnaGooseGame
 			if (Mouse.GetState().LeftButton == ButtonState.Pressed)
 			{
 				Vector2 offset = new Vector2(Mouse.GetState().X - mouseAnchor.X, Mouse.GetState().Y - mouseAnchor.Y);
-				this.Offset = new Vector2(this.Offset.X + (-offset.X * (float)gameTime.ElapsedGameTime.TotalSeconds * 10), 0);
+				//this.Offset = new Vector2(this.Offset.X + (-offset.X * (float)gameTime.ElapsedGameTime.TotalSeconds * 10), 0);
 
 			}
 			else
@@ -88,7 +88,7 @@ namespace XnaGooseGame
 		
 		protected virtual void Start(GameTime gameTime)
 		{
-			throw new NotImplementedException();
+			
 		}
 
 		private void HandleInteraction(PlayerElement player)

@@ -11,6 +11,7 @@ namespace XnaGooseGame
 		private static object syncObj = new object();
 		private static int deathCount = 0;
 		private static int lifeCount = 0;
+		private static int? generationNumber;
 
 		public static int Lives
 		{
@@ -37,6 +38,11 @@ namespace XnaGooseGame
 			}
 		}
 
+		public static void SetGeneration(int generation)
+		{
+			generationNumber = generation;
+		}
+
 		SpriteFont segoeFont;
 
 		public PopulatonLogger(ContentManager content)
@@ -46,7 +52,13 @@ namespace XnaGooseGame
 
 		public void Draw(SpriteBatch spriteBatch)
 		{
-			spriteBatch.DrawString(segoeFont, "deaths: " + deathCount.ToString() + "\nlives: " + lifeCount, new Vector2(10, 30), Color.White);
+			string printString = "deaths: " + deathCount.ToString() + "\nlives: " + lifeCount;
+			if (generationNumber.HasValue)
+			{
+				printString += "\ngeneration:" + generationNumber;
+			}
+
+			spriteBatch.DrawString(segoeFont, printString, new Vector2(10, 30), Color.White);
 		}
 	}
 }

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.ComponentModel;
 
 namespace XnaGooseGame
 {
@@ -26,6 +27,8 @@ namespace XnaGooseGame
 		FpsLogger fpsLogger;
 		PopulatonLogger deathLogger;
 
+		BackgroundWorker updateWorker;
+
         GameMode mode;
         int level;
         int gooseCount;
@@ -39,7 +42,12 @@ namespace XnaGooseGame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = VIEWPORT_HEIGHT;
-            graphics.PreferredBackBufferWidth = VIEWPORT_WIDTH; 
+            graphics.PreferredBackBufferWidth = VIEWPORT_WIDTH;
+			
+			updateWorker = new BackgroundWorker();
+			updateWorker.WorkerSupportsCancellation = true;
+			updateWorker.DoWork += new DoWorkEventHandler(updateWorker_DoWork);
+			updateWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(updateWorker_RunWorkerCompleted);
         }
 
         /// <summary>
@@ -93,7 +101,7 @@ namespace XnaGooseGame
             //this.scene = new SinglePlayerGameScene(GraphicsDevice, background);
             this.scene.LoadContent(Content);
 			this.fpsLogger = new FpsLogger(this.Content);
-			this.deathLogger = new PopulatonLogger(this.Content);
+			this.deathLogger = new PopulatonLogger(this.Content); 
         }
 
         /// <summary>
@@ -104,6 +112,8 @@ namespace XnaGooseGame
         {
             // TODO: Unload any non ContentManager content here
         }
+
+		GameTime offsetTime = new GameTime(TimeSpan.Zero, TimeSpan.Zero);
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -118,10 +128,56 @@ namespace XnaGooseGame
 				this.Exit();
 			}
 
-            this.scene.Update(gameTime);
+			if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) && Keyboard.GetState().IsKeyDown(Keys.R))
+			{
+				if (!this.updateWorker.IsBusy)
+				{
+					this.updateWorker.RunWorkerAsync(offsetTime);
+				} 
+			}
+			if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) && Keyboard.GetState().IsKeyDown(Keys.T))
+			{
+				if (this.updateWorker.IsBusy)
+				{
+					this.updateWorker.CancelAsync();
+				}
+			}
+
+			if (!this.updateWorker.IsBusy)
+			{
+				offsetTime = new GameTime(offsetTime.TotalGameTime.Add(gameTime.ElapsedGameTime), gameTime.ElapsedGameTime);
+				this.scene.Update(offsetTime);
+				
+			}
 
             base.Update(gameTime);
         }
+
+
+		void updateWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		{
+			
+		}
+
+		void updateWorker_DoWork(object sender, DoWorkEventArgs e)
+		{
+			GameTime time = (GameTime)e.Argument;
+			DateTime start = DateTime.Now;
+			int cnt =0;
+			while (true)
+			{
+				this.scene.Update(time);
+				offsetTime = time;
+				cnt ++;
+				time = new GameTime(time.TotalGameTime.Add(TimeSpan.FromMilliseconds(1000d / 60)), TimeSpan.FromMilliseconds(1000d / 60));
+				if (this.updateWorker.CancellationPending)
+				{
+					System.IO.File.WriteAllText("fff.txt", cnt + " " + ((DateTime.Now - start).TotalMilliseconds / 1000d) + " fps:" + (cnt / ((DateTime.Now - start).TotalMilliseconds / 1000d)));
+					break;
+				}
+			}
+		}
+
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -132,7 +188,10 @@ namespace XnaGooseGame
             GraphicsDevice.Clear(Color.Gray);
 
             spriteBatch.Begin();
-            this.scene.Draw(spriteBatch);
+			if (!updateWorker.IsBusy)
+			{
+				this.scene.Draw(spriteBatch);
+			}
             this.fpsLogger.Draw(gameTime, spriteBatch);
 			this.deathLogger.Draw(spriteBatch);
             spriteBatch.End();
