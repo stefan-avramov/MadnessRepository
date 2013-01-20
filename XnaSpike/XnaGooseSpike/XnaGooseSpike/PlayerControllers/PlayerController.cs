@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace XnaGooseGame
 {
+
 	class PlayerStatus
 	{
 		public Vector2 Location { get; set; }
@@ -38,9 +40,9 @@ namespace XnaGooseGame
 			this.ActionDuration = 300;
 		}
 
-		public PlayerController Clone()
+		public PlayerController Clone(GameTime gameTime)
 		{
-			var player = this.Player.Clone();
+			var player = this.Player.Clone(gameTime);
 			PlayerController controller = new PlayerController(player);
 			controller.ActionsHistory = this.ActionsHistory;
 			return controller;
@@ -111,6 +113,12 @@ namespace XnaGooseGame
 
 				return this.PredefinedActions[index];
 			}
+//=======
+//        protected PlayerAction GetRandomAction()
+//        {
+//            int next = RandomGenerator.Next(0, 1000);
+//            return next < 50 ? PlayerAction.MoveBackward : next < 500 ? PlayerAction.Jump : next < 800 ? PlayerAction.MoveForward : PlayerAction.Stay;
+//>>>>>>> eeeea6552a991e330579923b9306cec6ea4f0221
 		}
 	}
 }

@@ -22,6 +22,7 @@ namespace XnaGooseGame
 		private List<CoinElement> coins;
 		private int currentGeneration = 1;
 
+
 		public GenerationGameScene(int playersCount)
 		{
 			this.playersCount = playersCount;
@@ -36,6 +37,7 @@ namespace XnaGooseGame
 				PlayerController info = new PlayerController(new PlayerElement());
 				info.UsePredefinedActions = true;
 				info.PredefinedActions.AddRange(PickAbominated());
+
 				this.players.Add(info);
 				this.Elements.Add(info.Player);
 			}
@@ -243,7 +245,7 @@ namespace XnaGooseGame
 
 			if (this.started)
 			{
-				Console.WriteLine(gameTime.TotalGameTime.TotalSeconds);
+
 				foreach (PlayerController info in this.players)
 				{
 					info.Update(gameTime);

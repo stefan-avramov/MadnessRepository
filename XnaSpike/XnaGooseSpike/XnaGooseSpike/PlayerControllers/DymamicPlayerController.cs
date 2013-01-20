@@ -1,28 +1,30 @@
-//using Microsoft.Xna.Framework;
+﻿//using System;
 //using System.Collections.Generic;
-//using System;
+//using System.Linq;
+//using Microsoft.Xna.Framework;
 
 //namespace XnaGooseGame
 //{
-//    class PredefinedPlayerController : PlayerController
+//    class DymamicPlayerController : PlayerController
 //    {
-//        public List<PlayerAction> Actions { get; private set; }
+//        public List<PlayerAction> ActionsHistory { get; private set; }
 
 //        private int lastActionIndex = -1;
 //        private TimeSpan start;
 
-//        public PredefinedPlayerController(PlayerElement player)
+//        public DymamicPlayerController(PlayerElement player)
 //        {
 //            this.Player = player;
-//            this.Actions = new List<PlayerAction>();
+//            this.ActionsHistory = new List<PlayerAction>();
 //            this.ActionDuration = 300;
+//        }
 
-//            for (int i = 0; i < 300; i++)
-//            {
-//                int next = RandomGenerator.Next(0, 1000);
-//                PlayerAction action = GetRandomAction();
-//                this.Actions.Add(action);
-//            }
+//        public DymamicPlayerController Clone(GameTime gameTime)
+//        {
+//            var player = this.Player.Clone(gameTime);
+//            DymamicPlayerController controller = new DymamicPlayerController(player);
+//            controller.ActionsHistory = this.ActionsHistory;
+//            return controller;
 //        }
 
 //        public void Start(GameTime gameTime)
@@ -34,7 +36,7 @@
 //        public void Update(GameTime gameTime)
 //        {
 //            int index = (int)((gameTime.TotalGameTime - start).TotalMilliseconds / this.ActionDuration);
-//            if (index < 0 || index >= Actions.Count)
+//            if (index < 0)
 //            {
 //                Player.Die();
 //                return;
@@ -42,8 +44,9 @@
 
 //            if (lastActionIndex < index)
 //            {
-//                lastActionIndex = index;
-//                switch (Actions[index])
+//                PlayerAction action = GetRandomAction();
+
+//                switch (action)
 //                {
 //                    case PlayerAction.MoveForward:
 //                        Player.MoveForward();
@@ -54,7 +57,13 @@
 //                    case PlayerAction.Jump:
 //                        Player.Jump();
 //                        break;
+//                    case PlayerAction.Stay:
+//                        Player.Stop();
+//                        break;
 //                }
+
+//                ActionsHistory.Add(action);
+//                lastActionIndex = index;
 //            }
 //        }
 //    }
