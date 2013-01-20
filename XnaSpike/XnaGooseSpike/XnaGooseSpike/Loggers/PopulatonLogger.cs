@@ -11,6 +11,7 @@ namespace XnaGooseGame
 		private static object syncObj = new object();
 		private static int deathCount = 0;
 		private static int lifeCount = 0;
+		private static int winCount = 0;
 
 		public static int Lives
 		{
@@ -20,11 +21,28 @@ namespace XnaGooseGame
 			}
 		}
 
+		public static int Wins
+		{
+			get
+			{
+				return winCount;
+			}
+		}
+
 		public static void LogPlayerDeath()
 		{
 			lock (syncObj)
 			{
 				deathCount++;
+				lifeCount--;
+			}
+		}
+
+		public static void LogPlayerWin()
+		{
+			lock (syncObj)
+			{
+				winCount++;
 				lifeCount--;
 			}
 		}
@@ -46,7 +64,7 @@ namespace XnaGooseGame
 
 		public void Draw(SpriteBatch spriteBatch)
 		{
-			spriteBatch.DrawString(segoeFont, "deaths: " + deathCount.ToString() + "\nlives: " + lifeCount, new Vector2(10, 30), Color.White);
+			spriteBatch.DrawString(segoeFont, "deaths: " + deathCount.ToString() + "\nlives: " + lifeCount + "\nwins: " + winCount, new Vector2(10, 30), Color.White);
 		}
 	}
 }

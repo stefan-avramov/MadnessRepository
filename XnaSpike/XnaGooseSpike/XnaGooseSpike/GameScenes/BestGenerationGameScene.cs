@@ -36,7 +36,7 @@ namespace XnaGooseGame
 		{
 			if (this.started)
 			{
-				if (aliveControllers.Count < playersCount)
+				if (aliveControllers.Count < playersCount - PopulatonLogger.Wins && aliveControllers.Count > 0)
 				{
 					DymamicPlayerController randomAliveController = aliveControllers[RandomGenerator.Next(0, aliveControllers.Count)];
 					DymamicPlayerController newController = randomAliveController.Clone(gameTime);
@@ -46,8 +46,9 @@ namespace XnaGooseGame
 
 				for (int index = 0; index < this.aliveControllers.Count; index++)
 				{
-					this.aliveControllers[index].Update(gameTime);
-					if (this.aliveControllers[index].Player.IsDead)
+					DymamicPlayerController controller = this.aliveControllers[index];
+					controller.Update(gameTime);
+					if (controller.Player.IsDead || controller.Player.HasWon)
 					{
 						this.deadControllers.Add(this.aliveControllers[index]);
 						this.aliveControllers.RemoveAt(index);

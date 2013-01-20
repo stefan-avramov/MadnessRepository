@@ -65,6 +65,7 @@ namespace XnaGooseGame
 			set
 			{
 				this.hasWon = true;
+				PopulatonLogger.LogPlayerWin();
 			}
 		}
 
