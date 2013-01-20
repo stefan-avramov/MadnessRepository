@@ -1,80 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework;
+using System.Text;
 
 namespace XnaGooseGame
 {
-	class PlayerController
+	abstract class PlayerController
 	{
-		public PlayerElement Player { get; private set; }
-
-		public List<PlayerAction> ActionsHistory { get; private set; }
+		public PlayerElement Player { get; protected set; }
 
 		public double ActionDuration { get; set; }
 
-		private int lastActionIndex = -1;
-		private TimeSpan start;
-
-		public PlayerController(PlayerElement player)
-		{
-			this.Player = player;
-			this.ActionsHistory = new List<PlayerAction>();
-			this.ActionDuration = 300;
-		}
-
-		public PlayerController Clone(GameTime gameTime)
-		{
-			var player = this.Player.Clone(gameTime);
-			PlayerController controller = new PlayerController(player);
-			controller.ActionsHistory = this.ActionsHistory;
-			return controller;
-		}
-
-		public void Start(GameTime gameTime)
-		{
-			start = gameTime.TotalGameTime;
-			lastActionIndex = -1;
-		}
-
-		public void Update(GameTime gameTime)
-		{
-			int index = (int)((gameTime.TotalGameTime - start).TotalMilliseconds / this.ActionDuration);
-			if (index < 0)
-			{
-				Player.Die();
-				return;
-			}
-
-			if (lastActionIndex < index)
-			{
-				PlayerAction action = GetNextAction();
-
-				switch (action)
-				{
-					case PlayerAction.MoveForward:
-						Player.MoveForward();
-						break;
-					case PlayerAction.MoveBackward:
-						Player.MoveBackward();
-						break;
-					case PlayerAction.Jump:
-						Player.Jump();
-						break;
-					case PlayerAction.Stay:
-						Player.Stop();
-						break;
-				}
-
-				ActionsHistory.Add(action);
-				lastActionIndex = index;
-			}
-		}
-
-		private PlayerAction GetNextAction()
+		protected PlayerAction GetRandomAction()
 		{
 			int next = RandomGenerator.Next(0, 1000);
-			return next < 50 ? PlayerAction.MoveBackward : next < 500 ? PlayerAction.Jump :  next < 800 ? PlayerAction.MoveForward : PlayerAction.Stay;
+			return next < 50 ? PlayerAction.MoveBackward : next < 500 ? PlayerAction.Jump : next < 800 ? PlayerAction.MoveForward : PlayerAction.Stay;
 		}
 	}
 }

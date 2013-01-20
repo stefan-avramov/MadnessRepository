@@ -9,7 +9,7 @@ namespace XnaGooseGame
 {
 	class GenerationGameScene : GameScene
 	{
-		List<PlayerController> players;
+		List<DymamicPlayerController> players;
 		double speedMultiplier = 1.0;
 		int playersCount;
 		bool started = false;
@@ -23,10 +23,10 @@ namespace XnaGooseGame
 		 
 		protected virtual void InitializePlayers()
 		{
-			this.players = new List<PlayerController>();
+			this.players = new List<DymamicPlayerController>();
 			for (int i = 0; i < playersCount; i++)
 			{
-				PlayerController info = new PlayerController(new PlayerElement());
+				DymamicPlayerController info = new DymamicPlayerController(new PlayerElement());
 				this.players.Add(info);
 				this.Elements.Add(info.Player);
 			}
@@ -41,7 +41,7 @@ namespace XnaGooseGame
 
 			if (this.started)
 			{
-				foreach (PlayerController info in this.players)
+				foreach (DymamicPlayerController info in this.players)
 				{
 					info.Update(gameTime);
 				}
@@ -61,7 +61,7 @@ namespace XnaGooseGame
 		{
 			if (started) return;
 			started = true;
-			foreach (PlayerController info in this.players)
+			foreach (DymamicPlayerController info in this.players)
 			{
 				info.Start(gameTime);
 			}

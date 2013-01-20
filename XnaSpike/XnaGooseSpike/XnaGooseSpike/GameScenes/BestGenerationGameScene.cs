@@ -9,8 +9,8 @@ namespace XnaGooseGame
 {
 	class BestGenerationGameScene : GameScene
 	{
-		IList<PlayerController> aliveControllers;
-		IList<PlayerController> deadControllers;
+		IList<DymamicPlayerController> aliveControllers;
+		IList<DymamicPlayerController> deadControllers;
 		readonly int playersCount;
 		bool started = false;
 
@@ -22,11 +22,11 @@ namespace XnaGooseGame
 
 		protected virtual void InitializePlayers()
 		{
-			this.aliveControllers = new List<PlayerController>();
-			this.deadControllers = new List<PlayerController>();
+			this.aliveControllers = new List<DymamicPlayerController>();
+			this.deadControllers = new List<DymamicPlayerController>();
 			for (int i = 0; i < playersCount; i++)
 			{
-				PlayerController playerController = new PlayerController(new PlayerElement());
+				DymamicPlayerController playerController = new DymamicPlayerController(new PlayerElement());
 				this.aliveControllers.Add(playerController);
 				this.Elements.Add(playerController.Player);
 			}
@@ -38,8 +38,8 @@ namespace XnaGooseGame
 			{
 				if (aliveControllers.Count < playersCount)
 				{
-					PlayerController randomAliveController = aliveControllers[RandomGenerator.Next(0, aliveControllers.Count)];
-					PlayerController newController = randomAliveController.Clone(gameTime);
+					DymamicPlayerController randomAliveController = aliveControllers[RandomGenerator.Next(0, aliveControllers.Count)];
+					DymamicPlayerController newController = randomAliveController.Clone(gameTime);
 					this.Elements.Add(newController.Player);
 					aliveControllers.Add(newController); 
 				}
@@ -64,7 +64,7 @@ namespace XnaGooseGame
 			if (!started)
 			{
 				started = true;
-				foreach (PlayerController info in this.aliveControllers)
+				foreach (DymamicPlayerController info in this.aliveControllers)
 				{
 					info.Start(gameTime);
 				}

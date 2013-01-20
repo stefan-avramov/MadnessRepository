@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="GameScenes\CreditsGameScene.cs" />
     <Compile Include="GameLevelManager.cs" />
+    <Compile Include="PlayerControllers\PlayerController.cs" />
     <Compile Include="SceneElements\AxeElement.cs" />
     <Compile Include="SceneElements\CoinElement.cs" />
     <Compile Include="Model\ColorConsts.cs" />
@@ -97,7 +98,7 @@
     <Compile Include="GameScenes\GameScene.cs" />
     <Compile Include="GameScenes\GenerationGameScene.cs" />
     <Compile Include="Model\PlayerAction.cs" />
-    <Compile Include="PlayerControllers\PlayerController.cs" />
+    <Compile Include="PlayerControllers\DymamicPlayerController.cs" />
     <Compile Include="GameScenes\BestGenerationGameScene.cs" />
     <Compile Include="SceneElements\StarElement.cs" />
     <Compile Include="SceneElements\FireSmokeElement.cs" />
