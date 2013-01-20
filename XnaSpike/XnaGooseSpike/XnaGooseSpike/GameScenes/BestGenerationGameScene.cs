@@ -39,7 +39,7 @@ namespace XnaGooseGame
 				if (aliveControllers.Count < playersCount)
 				{
 					PlayerController randomAliveController = aliveControllers[RandomGenerator.Next(0, aliveControllers.Count)];
-					PlayerController newController = randomAliveController.Clone();
+					PlayerController newController = randomAliveController.Clone(gameTime);
 					this.Elements.Add(newController.Player);
 					aliveControllers.Add(newController); 
 				}

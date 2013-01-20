@@ -99,6 +99,7 @@
     <Compile Include="Model\PlayerAction.cs" />
     <Compile Include="PlayerControllers\PlayerController.cs" />
     <Compile Include="GameScenes\BestGenerationGameScene.cs" />
+    <Compile Include="SceneElements\StarElement.cs" />
     <Compile Include="SceneElements\FireSmokeElement.cs" />
     <Compile Include="SceneElements\IInteractiveObject.cs" />
     <Compile Include="SceneElements\PlayerElement.cs" />

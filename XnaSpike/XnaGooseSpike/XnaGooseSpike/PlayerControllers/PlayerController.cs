@@ -23,9 +23,9 @@ namespace XnaGooseGame
 			this.ActionDuration = 300;
 		}
 
-		public PlayerController Clone()
+		public PlayerController Clone(GameTime gameTime)
 		{
-			var player = this.Player.Clone();
+			var player = this.Player.Clone(gameTime);
 			PlayerController controller = new PlayerController(player);
 			controller.ActionsHistory = this.ActionsHistory;
 			return controller;

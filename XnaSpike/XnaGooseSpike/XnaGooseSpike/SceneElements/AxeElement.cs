@@ -32,8 +32,8 @@ namespace XnaGooseGame
 		public override void DrawFrame(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Microsoft.Xna.Framework.Vector2 screenPos)
 		{
 			Rectangle sourcerect = new Rectangle(0, 0, texture.Width, texture.Height);
-			//batch.Draw(this.texture, screenPos, sourcerect, Color.White, (float)angle, new Vector2(texture.Width / 2, texture.Height / 2), 1.0f, SpriteEffects.None, 0.5f);
-			batch.Draw(this.texture, new Vector2(screenPos.X + texture.Width / 2, screenPos.Y + texture.Height / 2), sourcerect, Color.White, (float)angle, new Vector2(texture.Width / 2, texture.Height / 2), 1.0f, SpriteEffects.None, 0.5f);
+			batch.Draw(this.texture, new Vector2(screenPos.X + texture.Width/2, screenPos.Y + texture.Height/2),
+				sourcerect, Color.White, (float)angle, new Vector2(texture.Width / 2, texture.Height / 2), 1.0f, SpriteEffects.None, 0.5f);
 		}
 
 		public override void LoadContent(Microsoft.Xna.Framework.Content.ContentManager manager)

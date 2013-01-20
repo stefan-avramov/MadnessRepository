@@ -27,6 +27,7 @@ namespace XnaGooseGame
 
 		public Texture2D Texture { get; set; }
 		public int CollectedValue { get; private set; }
+		private StarElement starElement;
 
 		int frame = 0;
 		double totalTime = 0;
@@ -36,6 +37,8 @@ namespace XnaGooseGame
 		private float jumpSpeed = jumpPower;
 
 		private HashSet<CoinElement> coins = new HashSet<CoinElement>();
+
+		private double lastCloneTime = (int)-1e6;
 
 		public PlayerElement()
 		{
@@ -68,6 +71,9 @@ namespace XnaGooseGame
 		public override void LoadContent(ContentManager content)
 		{
 			this.Texture = content.Load<Texture2D>("goose");
+
+			starElement = new StarElement();
+			starElement.LoadContent(content);
 		}
 
 		public override Vector2 Location
@@ -134,6 +140,8 @@ namespace XnaGooseGame
 		public override void Update(Microsoft.Xna.Framework.GameTime time)
 		{
 			base.Update(time);
+
+			starElement.Update(lastCloneTime, time.TotalGameTime.TotalMilliseconds);
 
 			if (this.HasWon)
 			{
@@ -279,6 +287,8 @@ namespace XnaGooseGame
 
 		public override void DrawFrame(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Microsoft.Xna.Framework.Vector2 screenPos)
 		{
+			starElement.DrawFrame(batch, screenPos);
+
 			screenPos.X -= PLAYER_OFFSET;
 			if (this.IsDead)
 			{
@@ -300,8 +310,9 @@ namespace XnaGooseGame
 			}
 		}
 
-		public PlayerElement Clone()
+		public PlayerElement Clone(GameTime gameTime)
 		{
+			this.lastCloneTime = gameTime.TotalGameTime.TotalMilliseconds; 
 			PlayerElement newPlayer = new PlayerElement();
 			
 			newPlayer.Texture = this.Texture;
@@ -314,6 +325,7 @@ namespace XnaGooseGame
 			newPlayer.isJumping = this.isJumping;
 			newPlayer.jumpSpeed = this.jumpSpeed;
 			newPlayer.Location = this.Location;
+			newPlayer.starElement = this.starElement.Clone();
 
 			return newPlayer;
 		}
