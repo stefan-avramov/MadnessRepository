@@ -36,25 +36,29 @@ namespace XnaGooseGame
 		{
 			if (this.started)
 			{
-				if (aliveControllers.Count < playersCount - PopulatonLogger.Wins && aliveControllers.Count > 0)
-				{
-					PlayerController randomAliveController = aliveControllers[RandomGenerator.Next(0, aliveControllers.Count)];
-					PlayerController newController = randomAliveController.Clone(gameTime);
-					this.Elements.Add(newController.Player);
-					aliveControllers.Add(newController); 
-				}
-
 				for (int index = 0; index < this.aliveControllers.Count; index++)
 				{
 					PlayerController controller = this.aliveControllers[index];
-					controller.Update(gameTime);
 					if (controller.Player.IsDead || controller.Player.HasWon)
 					{
 						this.deadControllers.Add(this.aliveControllers[index]);
 						this.aliveControllers.RemoveAt(index);
 						index--;
 					}
+					else
+					{
+						controller.Update(gameTime);
+					}
 				}
+
+				if (aliveControllers.Count < playersCount - PopulatonLogger.Wins && aliveControllers.Count > 0)
+				{
+					PlayerController randomAliveController = aliveControllers[RandomGenerator.Next(0, aliveControllers.Count)];
+					PlayerController newController = randomAliveController.Clone(gameTime);
+					this.Elements.Add(newController.Player);
+					aliveControllers.Add(newController);
+				}
+
 			}
 
 			base.Update(gameTime);
