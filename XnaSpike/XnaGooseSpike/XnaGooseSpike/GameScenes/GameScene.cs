@@ -11,8 +11,17 @@ namespace XnaGooseGame
 {
 	class GameScene
 	{
-		public Vector2 Offset { get; set; }
-		
+		public Vector2 Offset 
+		{ 
+			get { return offset; } 
+			set 
+			{
+				value.X = Math.Min(value.X, 0); 
+				this.offset = value; 
+			} 
+		}
+
+		private Vector2 offset;
 		private bool musicPlaying = false;
 		private Point mouseAnchor;
 		private List<SceneElement> elements = new List<SceneElement>();
@@ -41,7 +50,7 @@ namespace XnaGooseGame
 			}
 		}
 
-		public virtual void Update(GameTime gameTime) 
+		public virtual void Update(GameTime gameTime)
 		{
 			if (Game1.Instance.IsActive)
 			{
@@ -60,12 +69,12 @@ namespace XnaGooseGame
 			Parallel.ForEach(this.GetPlayers(), x => HandleInteraction(x));
 		}
 
-		protected virtual void HandleInput(GameTime gameTime) 
-		{ 
+		protected virtual void HandleInput(GameTime gameTime)
+		{
 			if (Keyboard.GetState().IsKeyDown(Keys.Enter))
 			{
 				this.Start(gameTime);
-			} 
+			}
 
 			if (Keyboard.GetState().IsKeyDown(Keys.Left))
 			{
@@ -88,10 +97,10 @@ namespace XnaGooseGame
 				mouseAnchor = new Point(Mouse.GetState().X, Mouse.GetState().Y);
 			}
 		}
-		
+
 		protected virtual void Start(GameTime gameTime)
 		{
-			
+
 		}
 
 		private void HandleInteraction(PlayerElement player)
