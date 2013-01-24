@@ -44,6 +44,7 @@ ipch
 .ncb
 .opensdf
 .sdf
+.debug.chachefile
 
 # Visual Studio profiler
 .psess
