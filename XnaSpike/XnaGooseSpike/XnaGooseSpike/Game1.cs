@@ -20,6 +20,8 @@ namespace XnaGooseGame
         public const int VIEWPORT_WIDTH = 890;
         public const int VIEWPORT_HEIGHT = 672;
 		public const bool MUSIC_ENABLED = false;
+		
+		public static Game1 Instance { get; private set; }
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -48,6 +50,8 @@ namespace XnaGooseGame
 			updateWorker.WorkerSupportsCancellation = true;
 			updateWorker.DoWork += new DoWorkEventHandler(updateWorker_DoWork);
 			updateWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(updateWorker_RunWorkerCompleted);
+
+			Game1.Instance = this;
         }
 
         /// <summary>

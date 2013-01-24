@@ -8,8 +8,8 @@ namespace XnaGooseGame
     static class Program
     {
         const int DEFAULT_LEVEL = 1;
-        const int DEFAULT_COUNT = 100;
-		const GameMode DEFAULT_MODE = GameMode.BestGenerationAlgorithm;
+        const int DEFAULT_COUNT = 150;
+		const GameMode DEFAULT_MODE = GameMode.GeneticAlgorithm1;
         /// <summary>
         /// The main entry point for the application.
         /// Use the folloing command line options:

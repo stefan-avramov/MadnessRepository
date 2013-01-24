@@ -4,7 +4,7 @@ namespace XnaGooseGame
 {
 	static class RandomGenerator
 	{
-		static Random rand = new Random((int)DateTime.Now.TimeOfDay.TotalMilliseconds);
+		static Random rand = new Random();//(int)DateTime.Now.TimeOfDay.TotalMilliseconds);
 		
 		public static int Next(int left, int right)
 		{
@@ -20,7 +20,7 @@ namespace XnaGooseGame
 		{
 			int next = RandomGenerator.Next(0, 1000);
 			PlayerAction action = 
-				next < 250 ?
+				next < 50 ?
 				PlayerAction.MoveBackward :
 				next < 500 ?
 				PlayerAction.Jump :

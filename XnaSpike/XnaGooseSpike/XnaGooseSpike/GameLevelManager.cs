@@ -28,10 +28,10 @@ namespace XnaGooseGame
 
 
 			CurrentLevel.InteractionObjects.Add(new AxeElement(1600, 300));
-			CurrentLevel.InteractionObjects.Add(new AxeElement(7900, 590));
+			CurrentLevel.InteractionObjects.Add(new AxeElement(7800, 590));
 			CurrentLevel.InteractionObjects.Add(new FireSmokeElement(4000, 380));
 			CurrentLevel.InteractionObjects.Add(new FireSmokeElement(5449, 290));
-			CurrentLevel.InteractionObjects.Add(new BatmanElement(530, 469));
+			//CurrentLevel.InteractionObjects.Add(new BatmanElement(530, 469));
 			CurrentLevel.LoadCoints();
 		}
 

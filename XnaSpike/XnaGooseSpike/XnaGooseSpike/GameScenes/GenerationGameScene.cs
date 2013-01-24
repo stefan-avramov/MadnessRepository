@@ -5,15 +5,18 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using System.Collections;
+using System.Text;
+using System.IO;
 
 namespace XnaGooseGame
 {
 	class GenerationGameScene : GameScene
 	{
-		const double CROSS_PERCENT = 0.5;
+		const double CROSS_PERCENT = 0.7;
 		const double MUTATION_PERCENT = 0.1;
-		const double ABOMINATION_PERCENT = 0.1;
-		const int MAX_ACTIONS = 300;
+		const double RESET_PERCENT = 0.05;
+		const int MAX_ACTIONS = 400;
+		const string STATE_FILE = "generation_state.txt";
 
 		private List<PlayerController> players;
 		private double speedMultiplier = 1.0;
@@ -21,7 +24,6 @@ namespace XnaGooseGame
 		private bool started = false;
 		private List<CoinElement> coins;
 		private int currentGeneration = 1;
-
 
 		public GenerationGameScene(int playersCount)
 		{
@@ -31,22 +33,56 @@ namespace XnaGooseGame
 
 		private void InitializePlayers()
 		{
+			StreamReader sr = null;
+			if (System.IO.File.Exists(STATE_FILE))
+			{
+				sr = File.OpenText(STATE_FILE);
+				string gen = sr.ReadLine();
+				int.TryParse(gen, out currentGeneration);
+			}
+
 			this.players = new List<PlayerController>();
 			for (int i = 0; i < playersCount; i++)
 			{
 				PlayerController info = new PlayerController(new PlayerElement());
 				info.UsePredefinedActions = true;
-				info.PredefinedActions.AddRange(PickAbominated());
+				if (sr != null && !sr.EndOfStream)
+				{
+					string line = sr.ReadLine();
+					info.PredefinedActions.AddRange(ReadActions(line));
+				}
+				else
+				{
+					info.PredefinedActions.AddRange(PickReset());
+				}
 
 				this.players.Add(info);
 				this.Elements.Add(info.Player);
 			}
 
+			if (sr != null)
+			{
+				sr.Close();
+				sr.Dispose();
+			}
+
 			PopulatonLogger.SetGeneration(currentGeneration);
 		}
 
-		private void NextGeneration()
+		private IEnumerable<PlayerAction> ReadActions(string line)
 		{
+			List<PlayerAction> list = new List<PlayerAction>();
+			string[] actions = line.Split(',');
+			foreach (string action in actions)
+			{
+				list.Add((PlayerAction)Enum.Parse(typeof(PlayerAction), action));
+			}
+
+			return list;
+		}
+
+		private void NextGeneration()
+		{			
 			foreach (PlayerController controller in this.players)
 			{
 				this.Elements.Remove(controller.Player);
@@ -91,14 +127,15 @@ namespace XnaGooseGame
 				{
 					info.PredefinedActions.AddRange(PickCrossed(this.players, probabilities));
 				}
-				else if (i <= playersCount * (MUTATION_PERCENT + CROSS_PERCENT + ABOMINATION_PERCENT))
+				else if (i <= playersCount * (MUTATION_PERCENT + CROSS_PERCENT + RESET_PERCENT))
 				{
-					info.PredefinedActions.AddRange(PickAbominated());
+					info.PredefinedActions.AddRange(PickReset());
 				}
 				else
 				{
 					info.PredefinedActions.AddRange(PickUnchaged(this.players, probabilities));
 				}
+
 				newList.Add(info);
 				this.Elements.Add(info.Player);
 			}
@@ -106,11 +143,31 @@ namespace XnaGooseGame
 			this.players = newList;
 			currentGeneration++;
 			PopulatonLogger.SetGeneration(currentGeneration);
+			PopulatonLogger.ResetCoins();
+			SaveGeneration(this.players);
+		}
+
+		private void SaveGeneration(List<PlayerController> list)
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.Append(currentGeneration.ToString() + "\n");
+			foreach (PlayerController controller in list)
+			{
+				foreach (PlayerAction action in controller.PredefinedActions)
+				{
+					sb.Append(action.ToString());
+					sb.Append(",");
+				}
+				sb.Remove(sb.Length - 1, 1);
+				sb.Append("\n");
+			}
+
+			System.IO.File.WriteAllText(STATE_FILE, sb.ToString());
 		}
 
 		private static double GetScore(PlayerStatus status)
 		{
-			return (status.Step + status.Location.X) + status.CollectedValue * 100;
+			return (status.Location.X * status.Location.X / 100.0d + status.CollectedValue * 3000.0d) / (double)status.Step;
 		}
 
 		private static IEnumerable<PlayerAction> PickUnchaged(List<PlayerController> controllers, List<double> probabilities)
@@ -121,7 +178,7 @@ namespace XnaGooseGame
 
 			for (int i = 1; i < probabilities.Count; i++)
 			{
-				if (rand > sum + probabilities[i])
+				if (rand < sum)
 				{
 					break;
 				}
@@ -146,7 +203,7 @@ namespace XnaGooseGame
 			return actions;
 		}
 
-		private static IEnumerable<PlayerAction> PickAbominated()
+		private static IEnumerable<PlayerAction> PickReset()
 		{
 			List<PlayerAction> actions = new List<PlayerAction>();
 			for (int j = 0; j < MAX_ACTIONS; j++)
@@ -168,11 +225,11 @@ namespace XnaGooseGame
 
 			for (int i = 1; i < probabilities.Count; i++)
 			{
-				if (rand1 <= sum + probabilities[i])
+				if (rand1 > sum)
 				{
 					index1 = i;
 				}
-				if (rand2 <= sum + probabilities[i])
+				if (rand2 > sum)
 				{
 					index2 = i;
 				}
@@ -185,22 +242,58 @@ namespace XnaGooseGame
 
 		private static IEnumerable<PlayerAction> Cross(PlayerController c1, PlayerController c2)
 		{
+			if (c1.Player.IsDead)
+			{
+				c1.StatusHistory.RemoveRange(c1.StatusHistory.Count - Math.Min(5, c1.StatusHistory.Count), Math.Min(5, c1.StatusHistory.Count));
+			}
+			if (c2.Player.IsDead)
+			{
+				c2.StatusHistory.RemoveRange(c2.StatusHistory.Count - Math.Min(5, c2.StatusHistory.Count), Math.Min(5, c2.StatusHistory.Count));
+			}
+
 			List<PlayerAction> actions = new List<PlayerAction>();
 
-			for (int i = 0; i < Math.Max(c1.StatusHistory.Count, c2.StatusHistory.Count); i++)
+			for (int i = 0; i < Math.Max(c1.StatusHistory.Count, c2.StatusHistory.Count); )
 			{
-				if (i < c1.StatusHistory.Count && i < c2.StatusHistory.Count)
+				int changeLen = RandomGenerator.Next(30, 50);
+				if (i + changeLen < c1.StatusHistory.Count && i + changeLen < c2.StatusHistory.Count)
 				{
-					actions.Add(GetScore(c1.StatusHistory[i]) < GetScore(c2.StatusHistory[i]) ? c2.ActionsHistory[i] : c1.ActionsHistory[i]);
+					if (2*GetScore(c1.StatusHistory[i + changeLen]) - 0.5*GetScore(c1.StatusHistory[i]) < 
+						2*GetScore(c2.StatusHistory[i + changeLen]) - 0.5*GetScore(c2.StatusHistory[i]))
+					{
+						for (int j = i; j < i + changeLen; j++)
+						{
+							actions.Add(c2.ActionsHistory[j]);
+						}
+					}
+					else
+					{
+						for (int j = i; j < i + changeLen; j++)
+						{
+							actions.Add(c1.ActionsHistory[j]);
+						}
+					}
 				}
-				else if (i < c1.StatusHistory.Count)
+				else if (i + changeLen < c1.StatusHistory.Count)
 				{
-					actions.Add(c1.ActionsHistory[i]);
+					for (int j = i; j < i + changeLen; j++)
+					{
+						actions.Add(c1.ActionsHistory[j]);
+					}
 				}
-				else if (i < c2.StatusHistory.Count)
+				else if (i + changeLen < c2.StatusHistory.Count)
 				{
-					actions.Add(c2.ActionsHistory[i]);
+					for (int j = i; j < i + changeLen; j++)
+					{
+						actions.Add(c2.ActionsHistory[j]);
+					}
 				}
+				else
+				{
+					break;
+				}
+
+				i += changeLen;
 			}
 
 			for (int j = actions.Count; j < MAX_ACTIONS; j++)
@@ -297,7 +390,7 @@ namespace XnaGooseGame
 				int index = RandomGenerator.Next(0, list.Count);
 				object obj = list[i];
 				list[i] = list[index];
-				list[index] = list[i];
+				list[index] = obj;
 			}
 		}
 	}

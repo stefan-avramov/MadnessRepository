@@ -276,6 +276,7 @@ namespace XnaGooseGame
 		{
 			if (!this.coins.Contains(coin))
 			{
+				PopulatonLogger.AddCoin();
 				this.coins.Add(coin);
 				this.CollectedValue += coin.Value;
 			}
