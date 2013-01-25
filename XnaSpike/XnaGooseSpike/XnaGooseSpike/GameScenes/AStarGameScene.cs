@@ -67,7 +67,7 @@ namespace XnaGooseGame
 		PlayerAction[] possibleActions = new PlayerAction[] { PlayerAction.None, PlayerAction.MoveLeft, PlayerAction.MoveRight, PlayerAction.Jump };
 		private void ComputeNextActions()
 		{
-			float goalDestinationX = player.Location.X + 700;
+			float goalDestinationX = player.Location.X + 983;
 			HashSet<int> visited = new HashSet<int>();
 
 			orderedSet = new OrderedBag<PlayerNode>((a, b) => a.Destination((int)goalDestinationX).CompareTo(b.Destination((int)goalDestinationX)));
@@ -139,7 +139,14 @@ namespace XnaGooseGame
 			}
 
 			orderedSet.Clear();
-			GetActionsFromNode(bestNode);
+			if (bestNode == initialNode)
+			{
+				pendingActions.Enqueue(PlayerAction.None);
+			}
+			else
+			{
+				GetActionsFromNode(bestNode);
+			}
 		}
 
 		private void GetActionsFromNode(PlayerNode node)

@@ -142,7 +142,10 @@ namespace XnaGooseGame
 		{
 			base.Update(time);
 
-			//starElement.Update(lastCloneTime, time.TotalGameTime.TotalMilliseconds);
+			if (starElement != null)
+			{
+				starElement.Update(lastCloneTime, time.TotalGameTime.TotalMilliseconds);
+			}
 
 			if (this.HasWon)
 			{
@@ -289,7 +292,10 @@ namespace XnaGooseGame
 
 		public override void DrawFrame(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Microsoft.Xna.Framework.Vector2 screenPos)
 		{
-			starElement.DrawFrame(batch, screenPos);
+			if (starElement != null)
+			{
+				starElement.DrawFrame(batch, screenPos);
+			}
 
 			screenPos.X -= PLAYER_OFFSET;
 			if (this.IsDead)
@@ -315,7 +321,9 @@ namespace XnaGooseGame
 		public PlayerElement Clone(GameTime gameTime)
 		{
 			this.lastCloneTime = gameTime.TotalGameTime.TotalMilliseconds;
-			return this.Clone();
+			PlayerElement newPlayer = this.Clone();
+			newPlayer.starElement = this.starElement.Clone();
+			return newPlayer;
 		}
 
 		public PlayerElement Clone()
@@ -332,7 +340,6 @@ namespace XnaGooseGame
 			newPlayer.isJumping = this.isJumping;
 			newPlayer.jumpSpeed = this.jumpSpeed;
 			newPlayer.Location = this.Location;
-			//newPlayer.starElement = this.starElement.Clone();
 			newPlayer.coins = new HashSet<CoinElement>(this.coins);
 
 			return newPlayer;
