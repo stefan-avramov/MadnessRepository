@@ -11,6 +11,7 @@ namespace XnaGooseGame
 		private int value = 1;
 		private Texture2D texture;
 		private int frame = 0;
+		private bool visible = true;
 
 		public int Value
 		{
@@ -52,6 +53,11 @@ namespace XnaGooseGame
 
 		public override void DrawFrame(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Microsoft.Xna.Framework.Vector2 screenPos)
 		{
+			if (!this.visible)
+			{
+				return;
+			}
+
 			Rectangle sourcerect = new Rectangle(frame* COIN_WIDTH, 0, COIN_WIDTH, COIN_HEIGHT);
 			batch.Draw(this.texture, screenPos, sourcerect, Color.White, 0f, new Vector2(), 1.0f, SpriteEffects.None, 0.5f);
 		}
@@ -64,6 +70,10 @@ namespace XnaGooseGame
 		public void Interact(PlayerElement player)
 		{
 			player.CollectCoin(this);
+			if (Game1.Instance.Mode == GameMode.Single)
+			{
+				this.visible = false;
+			}
 		}
 
 

@@ -54,8 +54,32 @@ namespace XnaGooseGame
 			Game1.Instance = this;
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
+		public GameMode Mode
+		{
+			get
+			{
+				return this.mode;
+			}
+		}
+
+		public int Level
+		{
+			get
+			{
+				return this.level;
+			}
+		}
+
+		public int GooseCount
+		{
+			get
+			{
+				return this.gooseCount;
+			}
+		}
+
+		/// <summary>
+		/// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
         /// related content.  Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
