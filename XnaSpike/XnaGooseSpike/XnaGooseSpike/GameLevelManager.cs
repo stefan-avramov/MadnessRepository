@@ -7,16 +7,16 @@ namespace XnaGooseGame
 	static class GameLevelManager
 	{
 		public static GameLevel CurrentLevel { get; private set; }
-          
-		public static void LoadLevel(int levelNumber, ContentManager manager)
+
+		public static void LoadLevel(int levelNumber, bool hasBatman, ContentManager manager)
 		{
 			if (levelNumber == 1)
 			{
-				LoadLevel1(manager);
+				LoadLevel1(manager, hasBatman);
 			}
 		}
 
-		private static void LoadLevel1(ContentManager manager)
+		private static void LoadLevel1(ContentManager manager, bool hasBatman)
 		{
 			Texture2D levelTexture = manager.Load<Texture2D>("level1");
 			Texture2D map0Texture = manager.Load<Texture2D>("map0");
@@ -31,7 +31,10 @@ namespace XnaGooseGame
 			CurrentLevel.InteractionObjects.Add(new AxeElement(7800, 590));
 			CurrentLevel.InteractionObjects.Add(new FireSmokeElement(4000, 380));
 			CurrentLevel.InteractionObjects.Add(new FireSmokeElement(5449, 290));
-			//CurrentLevel.InteractionObjects.Add(new BatmanElement(530, 469));
+			if (hasBatman)
+			{
+				CurrentLevel.InteractionObjects.Add(new BatmanElement(530, 469));
+			}
 			CurrentLevel.LoadCoints();
 		}
 

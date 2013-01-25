@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace XnaGooseGame
 {
-	class BatmanElement : SceneElement, IInteractiveObject
+	class BatmanElement : SceneElement, IInteractiveObject, ITimeDependentInteractionElement
 	{
 		Texture2D texture;
 		int offset = 0;
@@ -31,7 +31,7 @@ namespace XnaGooseGame
 		{
 			base.Update(time);
 
-			frame = ((int)time.TotalGameTime.TotalMilliseconds / 50) % FRAMES_COUNT;
+			frame = ((int)time.TotalGameTime.TotalMilliseconds / 60) % FRAMES_COUNT;
 			offset += 3*(dir?1:-1);
 			if (dir && offset > maxOffset)
 			{

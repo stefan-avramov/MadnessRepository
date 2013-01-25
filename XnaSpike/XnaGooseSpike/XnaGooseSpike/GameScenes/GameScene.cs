@@ -103,7 +103,7 @@ namespace XnaGooseGame
 
 		}
 
-		private void HandleInteraction(PlayerElement player)
+		protected void HandleInteraction(PlayerElement player)
 		{
 			foreach (IInteractiveObject obj in GameLevelManager.CurrentLevel.InteractionObjects)
 			{
@@ -133,11 +133,11 @@ namespace XnaGooseGame
 			GameLevelManager.CurrentLevel.Draw(batch, Offset);
 		}
 
-		public virtual void LoadContent(Microsoft.Xna.Framework.Content.ContentManager Content)
+		public virtual void LoadContent(Microsoft.Xna.Framework.Content.ContentManager content)
 		{
 			foreach (SceneElement element in this.Elements)
 			{
-				element.LoadContent(Content);
+				element.LoadContent(content);
 			}
 		}
 

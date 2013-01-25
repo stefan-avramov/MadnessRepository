@@ -142,7 +142,7 @@ namespace XnaGooseGame
 		{
 			base.Update(time);
 
-			starElement.Update(lastCloneTime, time.TotalGameTime.TotalMilliseconds);
+			//starElement.Update(lastCloneTime, time.TotalGameTime.TotalMilliseconds);
 
 			if (this.HasWon)
 			{
@@ -177,7 +177,7 @@ namespace XnaGooseGame
 
 			// epeck legacy block
 			{
-				var totalElapsedSeconds = (float)time.ElapsedGameTime.TotalSeconds;
+				float totalElapsedSeconds = (float)time.ElapsedGameTime.TotalSeconds;
 				Vector2 newLocation = new Vector2(this.Location.X, this.Location.Y + totalElapsedSeconds * 600f * jumpSpeed);
 				int intersectLevel = GroundLevelIntersection(newLocation);
 				if (intersectLevel > 0 && this.jumpSpeed > 0)
@@ -282,7 +282,7 @@ namespace XnaGooseGame
 			}
 		}
 
-		private bool IsOnGround()
+		public bool IsOnGround()
 		{
 			return !this.IsLocationValid(new Vector2(this.Location.X, this.Location.Y + 1));
 		}
@@ -332,7 +332,8 @@ namespace XnaGooseGame
 			newPlayer.isJumping = this.isJumping;
 			newPlayer.jumpSpeed = this.jumpSpeed;
 			newPlayer.Location = this.Location;
-			newPlayer.starElement = this.starElement.Clone();
+			//newPlayer.starElement = this.starElement.Clone();
+			newPlayer.coins = new HashSet<CoinElement>(this.coins);
 
 			return newPlayer;
 		}

@@ -9,7 +9,7 @@ namespace XnaGooseGame
     {
         const int DEFAULT_LEVEL = 1;
         const int DEFAULT_COUNT = 150;
-		const GameMode DEFAULT_MODE = GameMode.GeneticAlgorithm1;
+		const GameMode DEFAULT_MODE = GameMode.AStar;
         /// <summary>
         /// The main entry point for the application.
         /// Use the folloing command line options:
@@ -48,7 +48,6 @@ namespace XnaGooseGame
                                     break;
                                 case "algo1":
                                     mode = GameMode.GeneticAlgorithm1;
-                                    break;
                                     break;
 								case "algoBest":
                                     mode = GameMode.BestGenerationAlgorithm;
