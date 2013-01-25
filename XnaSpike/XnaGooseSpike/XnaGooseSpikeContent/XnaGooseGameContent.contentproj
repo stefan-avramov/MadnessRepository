@@ -30,21 +30,21 @@
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.VideoImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="level1.png">
+    <Compile Include="Level1\level1.png">
       <Name>level1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="map.png">
+    <Compile Include="Level1\map.png">
       <Name>map</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="goose.png">
+    <Compile Include="scene\goose.png">
       <Name>goose</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -58,14 +58,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="coin.png">
+    <Compile Include="scene\coin.png">
       <Name>coin</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="map0.png">
+    <Compile Include="Level1\map0.png">
       <Name>map0</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -79,21 +79,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="axe.png">
+    <Compile Include="scene\axe.png">
       <Name>axe</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="firesmoke.png">
+    <Compile Include="scene\firesmoke.png">
       <Name>firesmoke</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="credits.png">
+    <Compile Include="scene\credits.png">
       <Name>credits</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -105,14 +105,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spinning_star.png">
+    <Compile Include="scene\spinning_star.png">
       <Name>spinning_star</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="batman.png">
+    <Compile Include="scene\batman.png">
       <Name>batman</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>

@@ -18,9 +18,9 @@ namespace XnaGooseGame
 
 		private static void LoadLevel1(ContentManager manager)
 		{
-			Texture2D levelTexture = manager.Load<Texture2D>("level1");
-			Texture2D map0Texture = manager.Load<Texture2D>("map0");
-			Texture2D mapTexture = manager.Load<Texture2D>("map");
+			Texture2D levelTexture = manager.Load<Texture2D>("Level1/level1");
+			Texture2D map0Texture = manager.Load<Texture2D>("Level1/map0");
+			Texture2D mapTexture = manager.Load<Texture2D>("Level1/map");
 			CurrentLevel = new GameLevel(
 				new Texture2D[] { levelTexture, levelTexture },
 				new Texture2D[] { map0Texture, mapTexture },
@@ -28,10 +28,10 @@ namespace XnaGooseGame
 
 
 			CurrentLevel.InteractionObjects.Add(new AxeElement(1600, 300));
-			CurrentLevel.InteractionObjects.Add(new AxeElement(7800, 590));
-			CurrentLevel.InteractionObjects.Add(new FireSmokeElement(4000, 380));
-			CurrentLevel.InteractionObjects.Add(new FireSmokeElement(5449, 290));
-			//CurrentLevel.InteractionObjects.Add(new BatmanElement(530, 469));
+			CurrentLevel.InteractionObjects.Add(new AxeElement(7800, 593));
+			CurrentLevel.InteractionObjects.Add(new FireSmokeElement(4000, 400));
+			CurrentLevel.InteractionObjects.Add(new FireSmokeElement(5711, 400));
+			CurrentLevel.InteractionObjects.Add(new BatmanElement(530, 469, 700));
 			CurrentLevel.LoadCoints();
 		}
 

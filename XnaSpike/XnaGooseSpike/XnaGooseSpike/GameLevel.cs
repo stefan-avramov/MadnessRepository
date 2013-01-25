@@ -21,6 +21,8 @@ namespace XnaGooseGame
 		List<MapSegment> segments;
 		public List<IInteractiveObject> InteractionObjects { get; private set; }
 		public Song MusicTheme { get; private set; }
+		public int TotalWidth { get; private set; }
+
 		private static object syncObj = new object();
 
 		public GameLevel(IEnumerable<Texture2D> levelTextures, IEnumerable<Texture2D> mapTextures, Song song = null)
@@ -42,6 +44,7 @@ namespace XnaGooseGame
 					throw new ArgumentException("levelTextures and mapTextures must have the same size");
 				}
 
+				TotalWidth += texture.Width;
 				segments[i++].MapTexture = texture;
 			}
 

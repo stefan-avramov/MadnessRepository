@@ -10,21 +10,17 @@ namespace XnaGooseGame
 		Texture2D texture;
 		int offset = 0;
 		int frame = 0;
-		int maxOffset = 700;
+		int maxOffset;
 		bool dir = false;
 
 		private const int FRAMES_COUNT = 12;
 		private const int SPRITE_WIDTH = 100;
 		private const int SPRITE_HEIGHT = 131;
 
-		public BatmanElement(float x, float y)
-			: this(new Vector2(x, y))
+		public BatmanElement(float x, float y, int maxOffset = 700)
 		{
-		}
-
-		public BatmanElement(Vector2 location)
-		{
-			this.Location = location;
+			this.Location = new Vector2(x, y);
+			this.maxOffset = maxOffset;
 		}
 
 		public override void Update(Microsoft.Xna.Framework.GameTime time)
@@ -32,17 +28,8 @@ namespace XnaGooseGame
 			base.Update(time);
 
 			frame = ((int)time.TotalGameTime.TotalMilliseconds / 50) % FRAMES_COUNT;
-			offset += 3*(dir?1:-1);
-			if (dir && offset > maxOffset)
-			{
-				offset -= maxOffset - offset;
-				dir = !dir;
-			}
-			if (!dir && offset < 0)
-			{
-				offset = -offset;
-				dir = !dir;
-			}
+			int path = (int)((time.TotalGameTime.TotalMilliseconds / 4) % (2*maxOffset));
+			offset = path < maxOffset ? path : 2 * maxOffset - path;
 		}
 
 		public override void DrawFrame(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Microsoft.Xna.Framework.Vector2 screenPos)
@@ -54,7 +41,7 @@ namespace XnaGooseGame
 
 		public override void LoadContent(Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			texture = manager.Load<Texture2D>("batman");
+			texture = manager.Load<Texture2D>("scene/batman");
 		}
 
 		public void Interact(PlayerElement player)

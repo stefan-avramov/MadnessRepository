@@ -45,7 +45,7 @@ namespace XnaGooseGame
 
 		public override void LoadContent(Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			texture = manager.Load<Texture2D>("firesmoke");
+			texture = manager.Load<Texture2D>("scene/firesmoke");
 		}
 
 		public void Interact(PlayerElement player)

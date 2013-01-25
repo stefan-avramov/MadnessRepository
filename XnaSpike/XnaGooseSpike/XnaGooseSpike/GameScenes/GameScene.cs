@@ -16,7 +16,7 @@ namespace XnaGooseGame
 			get { return offset; } 
 			set 
 			{
-				value.X = Math.Min(value.X, 0); 
+				value.X = Math.Max(-GameLevelManager.CurrentLevel.TotalWidth + Game1.VIEWPORT_WIDTH, Math.Min(value.X, 0)); 
 				this.offset = value; 
 			} 
 		}

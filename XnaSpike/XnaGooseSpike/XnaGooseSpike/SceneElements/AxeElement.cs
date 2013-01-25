@@ -38,7 +38,7 @@ namespace XnaGooseGame
 
 		public override void LoadContent(Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			texture = manager.Load<Texture2D>("axe");
+			texture = manager.Load<Texture2D>("scene/axe");
 		}
 
 		public void Interact(PlayerElement player)
