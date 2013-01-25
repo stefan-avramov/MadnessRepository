@@ -8,12 +8,13 @@ namespace XnaGooseGame
 	{
 		public static GameLevel CurrentLevel { get; private set; }
 
-		public static void LoadLevel(int levelNumber, ContentManager manager)
+
+		public static void LoadLevel(int levelNumber, bool hasBatman, ContentManager manager)
 		{
 			switch (levelNumber)
 			{
 				case 1:
-					LoadLevel1(manager);
+					LoadLevel1(manager, hasBatman);
 					break;
 				case 2:
 					LoadLevel2(manager);
@@ -21,7 +22,7 @@ namespace XnaGooseGame
 			}
 		}
 
-		private static void LoadLevel1(ContentManager manager)
+		private static void LoadLevel1(ContentManager manager, bool hasBatman)
 		{
 			Texture2D levelTexture = manager.Load<Texture2D>("Level1/level1");
 			Texture2D map0Texture = manager.Load<Texture2D>("Level1/map0");

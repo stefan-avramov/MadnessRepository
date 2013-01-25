@@ -78,6 +78,9 @@
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="mscorlib" />
+    <Reference Include="PowerCollections">
+      <HintPath>..\PowerCollections\PowerCollections.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -85,8 +88,10 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameScenes\AStarGameScene.cs" />
     <Compile Include="GameScenes\CreditsGameScene.cs" />
     <Compile Include="GameLevelManager.cs" />
+    <Compile Include="PlayerControllers\AStarPlayerController.cs" />
     <Compile Include="PlayerControllers\PlayerController.cs" />
     <Compile Include="SceneElements\AxeElement.cs" />
     <Compile Include="SceneElements\CoinElement.cs" />
@@ -101,6 +106,7 @@
     <Compile Include="PlayerControllers\DymamicPlayerController.cs" />
     <Compile Include="GameScenes\BestGenerationGameScene.cs" />
     <Compile Include="SceneElements\BatmanElement.cs" />
+    <Compile Include="SceneElements\ITimeDependentInteractionElement.cs" />
     <Compile Include="SceneElements\StarElement.cs" />
     <Compile Include="SceneElements\FireSmokeElement.cs" />
     <Compile Include="SceneElements\IInteractiveObject.cs" />

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace XnaGooseGame
 {
-	class FireSmokeElement : SceneElement, IInteractiveObject
+	class FireSmokeElement : SceneElement, IInteractiveObject, ITimeDependentInteractionElement
 	{
 		Texture2D texture;
 		int frame;

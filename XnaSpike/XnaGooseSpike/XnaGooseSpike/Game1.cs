@@ -20,7 +20,8 @@ namespace XnaGooseGame
         public const int VIEWPORT_WIDTH = 890;
         public const int VIEWPORT_HEIGHT = 672;
 		public const bool MUSIC_ENABLED = false;
-		
+		public const bool ALLOW_BATMAN = false;
+
 		public static Game1 Instance { get; private set; }
 
         GraphicsDeviceManager graphics;
@@ -106,7 +107,7 @@ namespace XnaGooseGame
 			}
 			else
 			{
-				GameLevelManager.LoadLevel(this.level, Content);
+				GameLevelManager.LoadLevel(this.level, ALLOW_BATMAN, Content);
 			}
 
             switch (this.mode)
@@ -119,6 +120,9 @@ namespace XnaGooseGame
                     break;
 				case GameMode.BestGenerationAlgorithm:
 					this.scene = new BestGenerationGameScene(this.gooseCount);
+					break;
+				case GameMode.AStar:
+					this.scene = new AStarGameScene();
 					break;
                 case GameMode.Credits:
                 default:
@@ -175,7 +179,6 @@ namespace XnaGooseGame
 			{
 				offsetTime = new GameTime(offsetTime.TotalGameTime.Add(gameTime.ElapsedGameTime), gameTime.ElapsedGameTime);
 				this.scene.Update(offsetTime);
-				
 			}
 
             base.Update(gameTime);

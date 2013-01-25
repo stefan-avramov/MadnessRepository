@@ -6,7 +6,7 @@ namespace XnaGooseGame
 {
 	class SinglePlayerGameScene : GameScene
 	{
-		PlayerElement player;
+		protected PlayerElement player;
 
 		protected override void InitializeElements()
 		{
