@@ -70,7 +70,7 @@ namespace XnaGooseGame
 		public void Interact(PlayerElement player)
 		{
 			player.CollectCoin(this);
-			if (Game1.Instance.Mode == GameMode.Single || Game1.Instance.Mode == GameMode.AStar)
+			if (Game1.Instance.Mode == GameMode.Single || Game1.Instance.Mode == GameMode.AStar && !player.IsPlayerAGoat)
 			{
 				this.visible = false;
 			}

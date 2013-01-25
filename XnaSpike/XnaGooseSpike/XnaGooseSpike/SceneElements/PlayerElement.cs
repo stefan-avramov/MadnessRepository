@@ -48,6 +48,8 @@ namespace XnaGooseGame
 			this.Location = new Vector2(10, 0);
 		}
 
+		public bool IsPlayerAGoat { get; set; }
+
 		public bool IsDead
 		{
 			get
