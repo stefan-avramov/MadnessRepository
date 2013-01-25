@@ -67,7 +67,7 @@ namespace XnaGooseGame
 		PlayerAction[] possibleActions = new PlayerAction[] { PlayerAction.None, PlayerAction.MoveLeft, PlayerAction.MoveRight, PlayerAction.Jump };
 		private void ComputeNextActions()
 		{
-			float goalDestinationX = player.Location.X + 1200;
+			float goalDestinationX = player.Location.X + 700;
 			HashSet<int> visited = new HashSet<int>();
 
 			orderedSet = new OrderedBag<PlayerNode>((a, b) => a.Destination((int)goalDestinationX).CompareTo(b.Destination((int)goalDestinationX)));
@@ -121,7 +121,7 @@ namespace XnaGooseGame
 						continue;
 					}
 
-					int hash = ((current.Moves + 1) << 20) + ((int)(newPlayer.Location.X * 10) << 7) + (int)newPlayer.Location.Y;
+					int hash = ((int)(newPlayer.Location.X * 10) << 7) + (int)newPlayer.Location.Y;
 					if (!visited.Add(hash))
 					{
 						continue;

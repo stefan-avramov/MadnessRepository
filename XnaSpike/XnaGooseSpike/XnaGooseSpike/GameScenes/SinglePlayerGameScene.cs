@@ -13,8 +13,8 @@ namespace XnaGooseGame
 			base.InitializeElements();
 
 			player = new PlayerElement();
-			player.Location = new Vector2(3900, 10);
-			this.Offset = new Vector2(-3800, 0);
+			//player.Location = new Vector2(3900, 10);
+			//this.Offset = new Vector2(-3800, 0);
 			this.Elements.Add(player);
 		}
 
