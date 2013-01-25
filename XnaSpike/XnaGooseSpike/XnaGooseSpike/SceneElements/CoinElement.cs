@@ -7,7 +7,7 @@ namespace XnaGooseGame
 	class CoinElement : SceneElement, IInteractiveObject
 	{
 		public const int COIN_HEIGHT = 32;
-		public const int COIN_WIDTH = 24;
+		public const int COIN_WIDTH = 26;
 		private int value = 1;
 		private Texture2D texture;
 		private int frame = 0;
@@ -70,7 +70,7 @@ namespace XnaGooseGame
 		public void Interact(PlayerElement player)
 		{
 			player.CollectCoin(this);
-			if (Game1.Instance.Mode == GameMode.Single)
+			if (Game1.Instance.Mode == GameMode.Single || Game1.Instance.Mode == GameMode.AStar)
 			{
 				this.visible = false;
 			}

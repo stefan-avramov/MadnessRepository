@@ -19,6 +19,9 @@ namespace XnaGooseGame
 				case 2:
 					LoadLevel2(manager);
 					break;
+				case 3:
+					LoadLevel3(manager);
+					break;
 			}
 		}
 
@@ -58,6 +61,28 @@ namespace XnaGooseGame
 			CurrentLevel.InteractionObjects.Add(new FireSmokeElement(4000, 400));
 			CurrentLevel.InteractionObjects.Add(new FireSmokeElement(5711, 400));
 			CurrentLevel.InteractionObjects.Add(new BatmanElement(530, 469, 700));
+			CurrentLevel.LoadCoints();
+		}
+
+		private static void LoadLevel3(ContentManager manager)
+		{
+			Texture2D map0Texture = manager.Load<Texture2D>("Level3/map0");  
+			Texture2D map1Texture = manager.Load<Texture2D>("Level3/map1");
+
+			Texture2D level0Texture = manager.Load<Texture2D>("Level3/level0");
+			Texture2D level1Texture = manager.Load<Texture2D>("Level3/level1");
+
+			CurrentLevel = new GameLevel(
+				new Texture2D[] { level0Texture, level1Texture },
+				new Texture2D[] { map0Texture, map1Texture },
+				manager.Load<Song>("music"));
+
+
+			//CurrentLevel.InteractionObjects.Add(new AxeElement(1600, 300));
+			//CurrentLevel.InteractionObjects.Add(new AxeElement(7800, 593));
+			//CurrentLevel.InteractionObjects.Add(new FireSmokeElement(4000, 400));
+			//CurrentLevel.InteractionObjects.Add(new FireSmokeElement(5711, 400));
+			//CurrentLevel.InteractionObjects.Add(new BatmanElement(530, 469, 700));
 			CurrentLevel.LoadCoints();
 		}
 

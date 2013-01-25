@@ -1,6 +1,3 @@
-Content\segoe.xnb
-Content\music.xnb
-Content\credits_theme.xnb
 Content\Level1\level1.xnb
 Content\Level1\map.xnb
 Content\scene\goose.xnb
@@ -15,5 +12,12 @@ Content\Level2\map0.xnb
 Content\Level2\map1.xnb
 Content\Level2\level0.xnb
 Content\Level2\level1.xnb
+Content\segoe.xnb
+Content\music.xnb
+Content\credits_theme.xnb
+Content\Level3\map0.xnb
+Content\Level3\map1.xnb
+Content\Level3\level0.xnb
+Content\Level3\level1.xnb
 Content\music.wma
 Content\credits_theme.wma

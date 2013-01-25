@@ -7,9 +7,9 @@ namespace XnaGooseGame
 #if WINDOWS || XBOX
     static class Program
     {
-        const int DEFAULT_LEVEL = 2;
+        const int DEFAULT_LEVEL = 3;
         const int DEFAULT_COUNT = 150; 
-		const GameMode DEFAULT_MODE = GameMode.AStar; 
+		const GameMode DEFAULT_MODE = GameMode.BestGenerationAlgorithm; 
 
         /// <summary>
         /// The main entry point for the application.
