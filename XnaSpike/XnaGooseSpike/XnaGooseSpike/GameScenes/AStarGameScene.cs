@@ -77,10 +77,16 @@ namespace XnaGooseGame
 			visited.Add((int)initialNode.PlayerElement.Location.X << 10 + (int)initialNode.PlayerElement.Location.Y);
 
 			PlayerNode bestNode = initialNode;
+			bool foundBest = false;
 
-			while (orderedSet.Count > 0)
+			while (orderedSet.Count > 0 && !foundBest)
 			{
 				PlayerNode current = orderedSet.RemoveFirst();
+
+				if (current.PlayerElement.IsOnGround() && bestNode.Destination((int)goalDestinationX) > current.Destination((int)goalDestinationX))
+				{
+					bestNode = current;
+				}
 
 				foreach (PlayerAction action in possibleActions)
 				{
@@ -125,13 +131,13 @@ namespace XnaGooseGame
 					if (newPlayer.Location.X > goalDestinationX && newPlayer.IsOnGround() || newPlayer.HasWon)
 					{
 						bestNode = newNode;
-						goto outer;
+						foundBest = true;
+						break;
 					}
 					orderedSet.Add(newNode);
 				}
 			}
 
-		outer:
 			orderedSet.Clear();
 			GetActionsFromNode(bestNode);
 		}
