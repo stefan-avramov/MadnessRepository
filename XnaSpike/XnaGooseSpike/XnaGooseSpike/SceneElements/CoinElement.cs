@@ -58,7 +58,7 @@ namespace XnaGooseGame
 
 		public override void LoadContent(Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			this.texture = manager.Load<Texture2D>("coin");
+			this.texture = manager.Load<Texture2D>("scene/coin");
 		}
 
 		public void Interact(PlayerElement player)

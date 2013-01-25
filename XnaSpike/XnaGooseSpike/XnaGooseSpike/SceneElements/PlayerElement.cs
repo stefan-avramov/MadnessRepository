@@ -71,7 +71,7 @@ namespace XnaGooseGame
 
 		public override void LoadContent(ContentManager content)
 		{
-			this.Texture = content.Load<Texture2D>("goose");
+			this.Texture = content.Load<Texture2D>("scene/goose");
 
 			starElement = new StarElement();
 			starElement.LoadContent(content);
