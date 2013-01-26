@@ -19,8 +19,7 @@ namespace XnaGooseGame
     {
         public const int VIEWPORT_WIDTH = 890;
         public const int VIEWPORT_HEIGHT = 672;
-		public const bool MUSIC_ENABLED = false;
-		public const bool ALLOW_BATMAN = false;
+		public const bool MUSIC_ENABLED = false; 
 
 		public static Game1 Instance { get; private set; }
 
@@ -35,13 +34,17 @@ namespace XnaGooseGame
         GameMode mode;
         int level;
         int gooseCount;
+		bool hasBatman;
 
-        public Game1(GameMode mode, int level, int gooseCount)
+        public Game1(GameMode mode, int level, int gooseCount, bool hasBatman)
         {
             this.mode = mode;
             this.level = level;
             this.gooseCount = gooseCount;
+			this.hasBatman = hasBatman;
+
 			this.IsMouseVisible = true;
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = VIEWPORT_HEIGHT;
@@ -107,7 +110,7 @@ namespace XnaGooseGame
 			}
 			else
 			{
-				GameLevelManager.LoadLevel(this.level, ALLOW_BATMAN, Content);
+				GameLevelManager.LoadLevel(this.level, this.hasBatman, Content);
 			}
 
             switch (this.mode)

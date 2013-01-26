@@ -35,11 +35,13 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.buttonAlgorithm2 = new System.Windows.Forms.Button();
 			this.buttonCredits = new System.Windows.Forms.Button();
+			this.buttonAlgorithm3 = new System.Windows.Forms.Button();
+			this.batmanCheckbox = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// buttonSinglePlayer
 			// 
-			this.buttonSinglePlayer.Location = new System.Drawing.Point(29, 94);
+			this.buttonSinglePlayer.Location = new System.Drawing.Point(29, 109);
 			this.buttonSinglePlayer.Name = "buttonSinglePlayer";
 			this.buttonSinglePlayer.Size = new System.Drawing.Size(155, 23);
 			this.buttonSinglePlayer.TabIndex = 0;
@@ -49,7 +51,7 @@
 			// 
 			// buttonAlgorithm1
 			// 
-			this.buttonAlgorithm1.Location = new System.Drawing.Point(29, 123);
+			this.buttonAlgorithm1.Location = new System.Drawing.Point(29, 138);
 			this.buttonAlgorithm1.Name = "buttonAlgorithm1";
 			this.buttonAlgorithm1.Size = new System.Drawing.Size(155, 23);
 			this.buttonAlgorithm1.TabIndex = 0;
@@ -77,7 +79,7 @@
 			// 
 			// buttonAlgorithm2
 			// 
-			this.buttonAlgorithm2.Location = new System.Drawing.Point(29, 152);
+			this.buttonAlgorithm2.Location = new System.Drawing.Point(29, 167);
 			this.buttonAlgorithm2.Name = "buttonAlgorithm2";
 			this.buttonAlgorithm2.Size = new System.Drawing.Size(155, 23);
 			this.buttonAlgorithm2.TabIndex = 0;
@@ -87,7 +89,7 @@
 			// 
 			// buttonCredits
 			// 
-			this.buttonCredits.Location = new System.Drawing.Point(69, 220);
+			this.buttonCredits.Location = new System.Drawing.Point(64, 262);
 			this.buttonCredits.Name = "buttonCredits";
 			this.buttonCredits.Size = new System.Drawing.Size(75, 23);
 			this.buttonCredits.TabIndex = 3;
@@ -95,20 +97,42 @@
 			this.buttonCredits.UseVisualStyleBackColor = true;
 			this.buttonCredits.Click += new System.EventHandler(this.buttonCredits_Click);
 			// 
+			// buttonAlgorithm3
+			// 
+			this.buttonAlgorithm3.Location = new System.Drawing.Point(29, 196);
+			this.buttonAlgorithm3.Name = "buttonAlgorithm3";
+			this.buttonAlgorithm3.Size = new System.Drawing.Size(155, 23);
+			this.buttonAlgorithm3.TabIndex = 0;
+			this.buttonAlgorithm3.Text = "A* Algorithm";
+			this.buttonAlgorithm3.UseVisualStyleBackColor = true;
+			this.buttonAlgorithm3.Click += new System.EventHandler(this.buttonAlgorithm3_Click);
+			// 
+			// batmanCheckbox
+			// 
+			this.batmanCheckbox.AutoSize = true;
+			this.batmanCheckbox.Location = new System.Drawing.Point(64, 71);
+			this.batmanCheckbox.Name = "batmanCheckbox";
+			this.batmanCheckbox.Size = new System.Drawing.Size(84, 17);
+			this.batmanCheckbox.TabIndex = 4;
+			this.batmanCheckbox.Text = "Use Batman";
+			this.batmanCheckbox.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(212, 264);
+			this.ClientSize = new System.Drawing.Size(212, 314);
+			this.Controls.Add(this.batmanCheckbox);
 			this.Controls.Add(this.buttonCredits);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.comboBox1);
+			this.Controls.Add(this.buttonAlgorithm3);
 			this.Controls.Add(this.buttonAlgorithm2);
 			this.Controls.Add(this.buttonAlgorithm1);
 			this.Controls.Add(this.buttonSinglePlayer);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.MaximumSize = new System.Drawing.Size(228, 302);
-			this.MinimumSize = new System.Drawing.Size(228, 302);
+			this.MaximumSize = new System.Drawing.Size(228, 352);
+			this.MinimumSize = new System.Drawing.Size(228, 352);
 			this.Name = "Form1";
 			this.Text = "Launcher";
 			this.ResumeLayout(false);
@@ -124,6 +148,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonAlgorithm2;
         private System.Windows.Forms.Button buttonCredits;
+		private System.Windows.Forms.Button buttonAlgorithm3;
+		private System.Windows.Forms.CheckBox batmanCheckbox;
     }
 }
 
