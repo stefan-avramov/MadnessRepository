@@ -96,6 +96,7 @@ namespace XnaGooseGame
 					}
 
 					PlayerElement newPlayer = current.PlayerElement.Clone();
+					newPlayer.IsPlayerAGoat = true;
 					switch (action)
 					{
 						case PlayerAction.None:
