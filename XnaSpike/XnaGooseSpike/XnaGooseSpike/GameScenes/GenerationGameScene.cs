@@ -167,7 +167,7 @@ namespace XnaGooseGame
 
 		private static double GetScore(PlayerStatus status)
 		{
-			return (status.Location.X * status.Location.X / 100.0d + status.CollectedValue * 3000.0d) / (double)status.Step;
+			return status.Location.X * status.Location.X / 100.0d + status.CollectedValue * 3000.0d + (double)status.Step * status.Step / 22;
 		}
 
 		private static IEnumerable<PlayerAction> PickUnchaged(List<PlayerController> controllers, List<double> probabilities)

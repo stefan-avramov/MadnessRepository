@@ -12,8 +12,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <EnableUnmanagedDebugging>true</EnableUnmanagedDebugging>
-    <StartArguments>
-    </StartArguments>
+    <StartArguments>-m algo1</StartArguments>
   </PropertyGroup>
   <PropertyGroup>
     <EnableSecurityDebugging>false</EnableSecurityDebugging>

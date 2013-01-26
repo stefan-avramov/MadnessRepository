@@ -16,7 +16,7 @@ namespace XnaGooseGame
         /// The main entry point for the application.
         /// Use the folloing command line options:
         /// -l X (loads the level with number X)
-        /// -m [single|algo1|algo2|credits] (specifies the game mode)
+        /// -m [single|algo1|algoBest|credits] (specifies the game mode)
         /// -n X (specifies the number of gooses loaded
 		/// -b [true|false] (specifies whether to use Batman)
         /// </summary>
