@@ -336,9 +336,10 @@ namespace XnaGooseGame
 				TimeSpan.FromMilliseconds(gameTime.ElapsedGameTime.TotalMilliseconds * speedMultiplier),
 				gameTime.IsRunningSlowly);
 
-			if (this.started)
-			{
+			this.Start(gameTime);
 
+			if (this.started)
+			{ 
 				foreach (PlayerController info in this.players)
 				{
 					info.Update(gameTime);
@@ -368,7 +369,7 @@ namespace XnaGooseGame
 			return true;
 		}
 
-		protected override void Start(GameTime gameTime)
+		private void Start(GameTime gameTime)
 		{
 			if (started) return;
 			started = true;

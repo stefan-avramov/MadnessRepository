@@ -52,6 +52,7 @@ namespace XnaGooseGame
 
 		public virtual void Update(GameTime gameTime)
 		{
+
 			if (Game1.Instance.IsActive)
 			{
 				this.HandleInput(gameTime);
@@ -70,12 +71,7 @@ namespace XnaGooseGame
 		}
 
 		protected virtual void HandleInput(GameTime gameTime)
-		{
-			if (Keyboard.GetState().IsKeyDown(Keys.Enter))
-			{
-				this.Start(gameTime);
-			}
-
+		{ 
 			if (Keyboard.GetState().IsKeyDown(Keys.Left))
 			{
 				this.Offset = new Vector2(this.Offset.X + 20, 0);
@@ -96,12 +92,7 @@ namespace XnaGooseGame
 			{
 				mouseAnchor = new Point(Mouse.GetState().X, Mouse.GetState().Y);
 			}
-		}
-
-		protected virtual void Start(GameTime gameTime)
-		{
-
-		}
+		} 
 
 		protected void HandleInteraction(PlayerElement player)
 		{

@@ -34,6 +34,8 @@ namespace XnaGooseGame
 
 		public override void Update(GameTime gameTime)
 		{
+			this.Start(gameTime);
+
 			if (this.started)
 			{
 				for (int index = 0; index < this.aliveControllers.Count; index++)
@@ -64,7 +66,7 @@ namespace XnaGooseGame
 			base.Update(gameTime);
 		}
 
-		protected override void Start(GameTime gameTime)
+		private void Start(GameTime gameTime)
 		{
 			if (!started)
 			{
